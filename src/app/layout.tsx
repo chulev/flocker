@@ -21,7 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' data-theme='light'>
       <body className={cx('grid min-h-screen font-sans', font.variable)}>
         {children}
       </body>
