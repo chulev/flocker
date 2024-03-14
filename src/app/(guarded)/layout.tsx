@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <>
       <NextTopLoader color='#2f80ed' height={2} showSpinner={false} />
-      <section className='bg-foggy grid grid-rows-[auto_2fr_auto]'>
+      <section className='grid grid-rows-[auto_2fr_auto] bg-foggy'>
         <Header />
         {children}
         <Footer />
