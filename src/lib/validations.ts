@@ -43,3 +43,9 @@ export const REGISTER_SCHEMA = z
       path: ['confirmPassword'],
     }
   )
+
+export const FORGOT_PASSWORD_SCHEMA = z.object({
+  email: z.string().email({
+    message: 'Email not valid',
+  }),
+})

@@ -12,6 +12,7 @@ import { signIn } from '@/actions/sign-in'
 import { Button } from '@/components/button'
 import { FormError } from '@/components/form-error'
 import { Input } from '@/components/input'
+import { Link } from '@/components/link'
 import { useEvent } from '@/hooks/use-event'
 import { useForm } from '@/hooks/use-form'
 import { LOGIN_SCHEMA } from '@/lib/validations'
@@ -61,6 +62,11 @@ export const SignIn = () => {
       {(searchParams.get('error') || form.errors.submission) && (
         <FormError message='Sign in failed' />
       )}
+      <div className='my-4 flex justify-end'>
+        <Link className='text-xs hover:text-charcoal' href='/forgot-password'>
+          Forgot password?
+        </Link>
+      </div>
       <Button
         className='my-6 w-full justify-center'
         onClick={form.handleSubmit(onSubmit)}
