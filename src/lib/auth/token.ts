@@ -25,3 +25,27 @@ export const generateVerificationToken = async (email: string) => {
     .returning(['id', 'email'])
     .executeTakeFirstOrThrow()
 }
+
+export const generatePasswordResetToken = async (email: string) => {
+  const existingToken = await db
+    .selectFrom('ResetPasswordToken')
+    .select(['id'])
+    .where('email', '=', email)
+    .executeTakeFirst()
+
+  if (existingToken) {
+    await db
+      .deleteFrom('ResetPasswordToken')
+      .where('id', '=', existingToken.id)
+      .executeTakeFirstOrThrow()
+  }
+
+  return await db
+    .insertInto('ResetPasswordToken')
+    .values({
+      email,
+      expires: new Date(new Date().getTime() + THREE_HOURS),
+    })
+    .returning(['id', 'email'])
+    .executeTakeFirstOrThrow()
+}

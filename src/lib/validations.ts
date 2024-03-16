@@ -23,6 +23,8 @@ export const LOGIN_SCHEMA = z.object({
   }),
 })
 
+export const UUID_SCHEMA = z.string().uuid()
+
 export const REGISTER_SCHEMA = z
   .object({
     name: NAME_SCHEMA,
@@ -49,3 +51,20 @@ export const FORGOT_PASSWORD_SCHEMA = z.object({
     message: 'Email not valid',
   }),
 })
+
+export const RESET_PASSWORD_SCHEMA = z
+  .object({
+    token: UUID_SCHEMA,
+    password: z.string(),
+    confirmPassword: z.string(),
+  })
+  .refine(
+    ({ password, confirmPassword }) =>
+      password.length > 0 &&
+      confirmPassword.length > 0 &&
+      password === confirmPassword,
+    {
+      message: 'Passwords do not match',
+      path: ['confirmPassword'],
+    }
+  )
