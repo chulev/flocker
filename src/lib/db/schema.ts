@@ -55,9 +55,61 @@ export interface VerificationToken {
   id: Generated<string>
 }
 
+export interface Bookmark {
+  id: Generated<string>
+  tweetId: string
+  userId: string
+}
+
+export interface Reply {
+  content: string
+  id: Generated<string>
+  tweetId: string
+  userId: string
+}
+
+export interface ReplyAttachment {
+  id: Generated<string>
+  replyId: string
+  uri: string
+}
+
+export interface ReplyLike {
+  id: Generated<string>
+  replyId: string
+  userId: string
+}
+
+export interface Tweet {
+  content: string
+  followerOnly: Generated<boolean>
+  id: Generated<string>
+  retweetId: string | null
+  userId: string
+}
+
+export interface TweetAttachment {
+  id: Generated<string>
+  tweetId: string
+  uri: string
+}
+
+export interface TweetLike {
+  id: Generated<string>
+  tweetId: string
+  userId: string
+}
+
 export interface DB {
   Account: Account
+  Bookmark: Bookmark
+  Reply: Reply
+  ReplyAttachment: ReplyAttachment
+  ReplyLike: ReplyLike
   ResetPasswordToken: ResetPasswordToken
+  Tweet: Tweet
+  TweetAttachment: TweetAttachment
+  TweetLike: TweetLike
   User: User
   VerificationToken: VerificationToken
 }
