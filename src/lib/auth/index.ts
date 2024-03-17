@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
+import { cache } from 'react'
 
 import { db } from '@/lib/db/client'
 import { SIGN_IN_PATH } from '@/routes'
@@ -77,4 +78,32 @@ export const {
   providers: [Google],
   session: { strategy: 'jwt' },
   adapter: KyselyAdapter(db),
+})
+
+export const getCurrentUser = cache(async () => {
+  const session = await auth()
+
+  if (!session?.user) return null
+
+  return session.user
+})
+
+export const fetchUser = cache(async () => {
+  const currentUser = await getCurrentUser()
+
+  if (!currentUser) return null
+
+  return await db
+    .selectFrom('User')
+    .select([
+      'name',
+      'email',
+      'image',
+      'handle',
+      'cover',
+      'description',
+      'theme',
+    ])
+    .where('id', '=', currentUser.id)
+    .executeTakeFirst()
 })
