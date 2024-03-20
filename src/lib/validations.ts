@@ -68,3 +68,37 @@ export const RESET_PASSWORD_SCHEMA = z
       path: ['confirmPassword'],
     }
   )
+
+export const ACCEPTED_IMAGE_MIME_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+]
+const MAX_FILE_SIZE = 1024 * 1024 * 10
+const IMG_PICKER_SCHEMA = z
+  .instanceof(File)
+  .or(z.string())
+  .refine((file) => {
+    if (!(file instanceof File)) return true
+
+    return file.size <= MAX_FILE_SIZE
+  }, 'Max image size is 10 MB')
+  .refine((file) => {
+    if (!(file instanceof File)) return true
+
+    return ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)
+  }, 'Only .jpg, .jpeg, .png and .webp formats are supported')
+
+export const MAX_CONTENT_LENGTH = 180
+export const TWEET_SCHEMA = z.object({
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: 'Tweet cannot be empty' })
+    .max(MAX_CONTENT_LENGTH, {
+      message: `Tweet cannot exceed ${MAX_CONTENT_LENGTH} symbols`,
+    }),
+  img: IMG_PICKER_SCHEMA,
+  followerOnly: z.enum(['Y', 'N']),
+})

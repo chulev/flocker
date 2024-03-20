@@ -88,6 +88,14 @@ export const getCurrentUser = cache(async () => {
   return session.user
 })
 
+export const getCurrentUserOrThrow = async () => {
+  const currentUser = await getCurrentUser()
+
+  if (!currentUser) throw Error('Not authenticated')
+
+  return currentUser
+}
+
 export const fetchUser = cache(async () => {
   const currentUser = await getCurrentUser()
 
