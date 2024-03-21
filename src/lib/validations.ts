@@ -102,3 +102,5 @@ export const TWEET_SCHEMA = z.object({
   img: IMG_PICKER_SCHEMA,
   followerOnly: z.enum(['Y', 'N']),
 })
+
+export const DEFAULT_LIMIT = 10
