@@ -104,3 +104,26 @@ export const TWEET_SCHEMA = z.object({
 })
 
 export const DEFAULT_LIMIT = 10
+export const NEXT_CURSOR_SCHEMA = z.string().nullable()
+export const LIMIT_SCHEMA = z
+  .string()
+  .nullable()
+  .transform((limit) => {
+    if (!limit) return DEFAULT_LIMIT
+
+    const parsedLimit = parseInt(limit, 10)
+    if (Number.isNaN(parsedLimit) || parsedLimit > 10) return DEFAULT_LIMIT
+
+    return parsedLimit
+  })
+export const ORDER_SCHEMA = z
+  .enum(['asc', 'desc'])
+  .nullable()
+  .transform((limit) => {
+    if (!limit) return 'desc'
+
+    return limit
+  })
+export const TWEETS_FILTERS_SCHEMA = z
+  .enum(['home', 'latest', 'top', 'media', 'bookmarks'])
+  .default('home')
