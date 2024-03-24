@@ -53,3 +53,21 @@ export const fetchLatestTweets = async (
 
   return enrichTweets(tweets, currentUser, limit)
 }
+
+export const fetchMediaTweets = async (
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const tweets = await tweetsQuery(nextCursor, limit, order)
+    .innerJoin(
+      'TweetAttachment as UserTweetAttachment',
+      'UserTweetAttachment.tweetId',
+      'Tweet.id'
+    )
+    .orderBy('Tweet.id', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
