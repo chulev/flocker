@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 
 import {
+  fetchBookmarkedTweets,
   fetchLatestTweets,
   fetchMediaTweets,
   fetchTopTweets,
@@ -36,6 +37,9 @@ export async function GET(request: NextRequest) {
       break
     case 'media':
       response = await fetchMediaTweets(nextCursor, limit, order)
+      break
+    case 'bookmarks':
+      response = await fetchBookmarkedTweets(nextCursor, limit, order)
       break
     default:
       response = await fetchLatestTweets(nextCursor, limit, order)
