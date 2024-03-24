@@ -1,6 +1,10 @@
 import { NextRequest } from 'next/server'
 
-import { fetchLatestTweets, fetchMediaTweets } from '@/data/tweet'
+import {
+  fetchLatestTweets,
+  fetchMediaTweets,
+  fetchTopTweets,
+} from '@/data/tweet'
 import { getCurrentUser } from '@/lib/auth'
 import type { EnrichedTweet, PaginatedResponse } from '@/lib/types'
 import {
@@ -24,6 +28,9 @@ export async function GET(request: NextRequest) {
   let response: PaginatedResponse<EnrichedTweet>
 
   switch (filter) {
+    case 'top':
+      response = await fetchTopTweets(nextCursor, limit, order)
+      break
     case 'latest':
       response = await fetchLatestTweets(nextCursor, limit, order)
       break

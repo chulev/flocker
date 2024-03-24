@@ -41,6 +41,19 @@ export const fetchTweet = async (id: string) => {
   return result.data[0]
 }
 
+export const fetchTopTweets = async (
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const tweets = await tweetsQuery(nextCursor, limit, order)
+    .orderBy('likeCount', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
+
 export const fetchLatestTweets = async (
   nextCursor: CursorType = null,
   limit: number = DEFAULT_LIMIT,
