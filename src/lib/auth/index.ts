@@ -1,11 +1,14 @@
 import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
 import Google from 'next-auth/providers/google'
 import { cache } from 'react'
 
 import { db } from '@/lib/db/client'
 import { SIGN_IN_PATH } from '@/routes'
 
+import { LOGIN_SCHEMA } from '../validations'
 import { KyselyAdapter } from './adapter'
+import { verify } from './password'
 
 export const {
   handlers: { GET, POST },
@@ -75,7 +78,51 @@ export const {
       return token
     },
   },
-  providers: [Google],
+  providers: [
+    Google,
+    Credentials({
+      async authorize(credentials) {
+        const validatedFields = LOGIN_SCHEMA.safeParse(credentials)
+
+        if (validatedFields.success) {
+          const { email, password } = validatedFields.data
+
+          const existingUser = await db
+            .selectFrom('User')
+            .select([
+              'name',
+              'email',
+              'handle',
+              'id',
+              'description',
+              'cover',
+              'image',
+              'password',
+              'emailVerified',
+            ])
+            .where('email', '=', email)
+            .executeTakeFirst()
+
+          if (
+            !existingUser ||
+            !existingUser.password ||
+            !existingUser.emailVerified
+          )
+            return null
+
+          const passwordsMatch = verify(existingUser.password, password)
+
+          if (passwordsMatch) {
+            const { password, ...rest } = existingUser
+
+            return rest
+          }
+        }
+
+        return null
+      },
+    }),
+  ],
   session: { strategy: 'jwt' },
   adapter: KyselyAdapter(db),
 })
