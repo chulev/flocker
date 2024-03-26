@@ -5,6 +5,8 @@ import type { CursorType, Order, ResultType, Tweet } from '@/lib/types'
 import { extractDateFromUUID } from '@/lib/uuid'
 import { DEFAULT_LIMIT } from '@/lib/validations'
 
+import { getUserByHandle } from './user'
+
 const enrichTweets = async (
   tweets: Tweet[],
   currentUser: Awaited<ReturnType<typeof getCurrentUserOrThrow>>,
@@ -94,6 +96,93 @@ export const fetchBookmarkedTweets = async (
   const tweets = await tweetsQuery(nextCursor, limit, order)
     .innerJoin('Bookmark as UserBookmark', 'UserBookmark.tweetId', 'Tweet.id')
     .where('UserBookmark.userId', '=', currentUser.id)
+    .orderBy('Tweet.id', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
+
+export const fetchUserTweets = async (
+  handle: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const user = await getUserByHandle(handle)
+
+  if (!user) throw Error('User not found')
+
+  const tweets = await tweetsQuery(nextCursor, limit, order)
+    .where('Tweet.userId', '=', user.id)
+    .orderBy('Tweet.id', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
+
+export const fetchUserRepliedTweets = async (
+  handle: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const user = await getUserByHandle(handle)
+
+  if (!user) throw Error('User not found')
+
+  const tweets = await tweetsQuery(nextCursor, limit, order)
+    .innerJoin('Reply as UserReply', 'UserReply.tweetId', 'Tweet.id')
+    .where('UserReply.userId', '=', user.id)
+    .orderBy('Tweet.id', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
+
+export const fetchUserMediaTweets = async (
+  handle: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const user = await getUserByHandle(handle)
+
+  if (!user) throw Error('User not found')
+
+  const tweets = await tweetsQuery(nextCursor, limit, order)
+    .innerJoin(
+      'TweetAttachment as UserTweetAttachment',
+      'UserTweetAttachment.tweetId',
+      'Tweet.id'
+    )
+    .where('Tweet.userId', '=', user.id)
+    .orderBy('Tweet.id', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
+
+export const fetchUserLikedTweets = async (
+  handle: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const user = await getUserByHandle(handle)
+
+  if (!user) throw Error('User not found')
+
+  const tweets = await tweetsQuery(nextCursor, limit, order)
+    .innerJoin(
+      'TweetLike as UserTweetLike',
+      'UserTweetLike.tweetId',
+      'Tweet.id'
+    )
+    .where('UserTweetLike.userId', '=', user.id)
     .orderBy('Tweet.id', order)
     .execute()
 

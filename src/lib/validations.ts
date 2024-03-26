@@ -124,6 +124,10 @@ export const ORDER_SCHEMA = z
 
     return limit
   })
+
+export const USER_TWEETS_FILTERS_SCHEMA = z
+  .enum(['tweets', 'replies', 'media', 'likes'])
+  .default('tweets')
 export const TWEETS_FILTERS_SCHEMA = z
   .enum(['home', 'latest', 'top', 'media', 'bookmarks'])
   .default('home')

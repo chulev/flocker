@@ -35,7 +35,7 @@ export const UserMenu = ({ name, handle, image }: Props) => {
           variant='secondary'
           className='m-2 flex cursor-pointer items-center justify-center p-1 max-sm:w-fit'
         >
-          <Avatar variant='sm' src={image} alt='Current user' />
+          <Avatar variant='sm' src={image} alt={`${name} menu`} />
           <span className='ml-2 w-24 truncate text-sm text-charcoal max-sm:hidden'>
             {name}
           </span>
