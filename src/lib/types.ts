@@ -38,3 +38,12 @@ export type EnrichedTweet = Tweet & {
     saved: boolean
   }
 }
+
+export type UserCard = {
+  handle: string
+  description: string | null
+  image: string | null
+  name: string
+  followersCount: string
+  following: boolean
+}
