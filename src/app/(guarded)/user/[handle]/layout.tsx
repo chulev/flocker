@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation'
 import { ActiveLink } from '@/components/active-link'
 import { Avatar } from '@/components/avatar'
 import { Image } from '@/components/image'
-import { getUserProfileByHandle } from '@/data/user'
+import { Follow } from '@/components/user/follow'
+import { doesCurrentUserFollow, getUserProfileByHandle } from '@/data/user'
 import { getCurrentUser } from '@/lib/auth'
 
 import { SidebarLayout } from '../../_components/sidebar-layout'
@@ -24,6 +25,11 @@ export default async function UserLayout({
   const user = await getUserProfileByHandle(handle)
 
   if (!user || !currentUser) notFound()
+
+  const isCurrentUserFollowing = await doesCurrentUserFollow(
+    currentUser.handle,
+    user.handle
+  )
 
   return (
     <>
@@ -68,6 +74,14 @@ export default async function UserLayout({
                     </span>
                   )}
                 </div>
+                {currentUser.id !== user.id && (
+                  <div className='flex items-start justify-center'>
+                    <Follow
+                      handle={user.handle}
+                      following={isCurrentUserFollowing}
+                    />
+                  </div>
+                )}
               </div>
             </section>
             <div className='w-full' />

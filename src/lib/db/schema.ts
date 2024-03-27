@@ -61,6 +61,12 @@ export interface Bookmark {
   userId: string
 }
 
+export interface Follow {
+  followeeId: string
+  followerId: string
+  id: Generated<string>
+}
+
 export interface Reply {
   content: string
   id: Generated<string>
@@ -103,6 +109,7 @@ export interface TweetLike {
 export interface DB {
   Account: Account
   Bookmark: Bookmark
+  Follow: Follow
   Reply: Reply
   ReplyAttachment: ReplyAttachment
   ReplyLike: ReplyLike

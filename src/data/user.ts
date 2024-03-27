@@ -16,6 +16,26 @@ export const getUserProfileByHandle = async (handle: string) => {
     .executeTakeFirst()
 }
 
+export const doesCurrentUserFollow = async (
+  currentUserHandle: string,
+  userHandle: string
+) => {
+  const follow = await db
+    .selectFrom('Follow')
+    .leftJoin('User as Follower', 'Follower.id', 'Follow.followerId')
+    .leftJoin('User as Followee', 'Followee.id', 'Follow.followeeId')
+    .where((eb) =>
+      eb.and([
+        eb('Follower.handle', '=', currentUserHandle),
+        eb('Followee.handle', '=', userHandle),
+      ])
+    )
+    .select(['Follow.id'])
+    .executeTakeFirst()
+
+  return !!follow?.id
+}
+
 export const getUserByHandle = async (handle: string) => {
   return await db
     .selectFrom('User')
