@@ -1,4 +1,9 @@
+import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
+import { peopleQuery } from '@/lib/db/queries'
+import { paginate } from '@/lib/paginate'
+import { CursorType, Order, ResultType } from '@/lib/types'
+import { DEFAULT_LIMIT } from '@/lib/validations'
 
 export const getUserProfileByHandle = async (handle: string) => {
   return await db
@@ -50,4 +55,44 @@ export const getUserByEmail = async (email: string) => {
     .select(['id', 'email', 'handle', 'emailVerified'])
     .where('email', '=', email)
     .executeTakeFirst()
+}
+
+export const getUserFollowing = async (
+  handle: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const user = await getUserByHandle(handle)
+
+  if (!user) throw Error('User not found')
+
+  const following = await peopleQuery(nextCursor, limit, order, currentUser.id)
+    .leftJoin('Follow as Following', 'Following.followeeId', 'User.id')
+    .where('Following.followerId', '=', user.id)
+    .orderBy('User.id', order)
+    .execute()
+
+  return paginate<ResultType<typeof following>>(following, limit)
+}
+
+export const getUserFollowers = async (
+  handle: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const user = await getUserByHandle(handle)
+
+  if (!user) throw Error('User not found')
+
+  const followers = await peopleQuery(nextCursor, limit, order, currentUser.id)
+    .leftJoin('Follow as Followers', 'Followers.followerId', 'User.id')
+    .where('Followers.followeeId', '=', user.id)
+    .orderBy('User.id', order)
+    .execute()
+
+  return paginate<ResultType<typeof followers>>(followers, limit)
 }

@@ -1,4 +1,5 @@
 import type { CursorType, Order } from '../types'
+import { DEFAULT_LIMIT } from '../validations'
 import { db } from './client'
 
 export const userReactionsQuery = (tweetIds: string[], userId: string) => {
@@ -126,4 +127,48 @@ export const tweetsQuery = (
   }
 
   return tweetsBaseQuery.limit(limit + 1)
+}
+
+export const peopleQuery = (
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc',
+  currentUserId: string,
+  emailVerified: boolean = true
+) => {
+  let peopleQuery = db
+    .selectFrom('User')
+    .leftJoin('Follow', 'Follow.followeeId', 'User.id')
+    .leftJoin('Follow as CurrentUserFollowsUser', (join) =>
+      join
+        .on('CurrentUserFollowsUser.followerId', '=', currentUserId)
+        .onRef('CurrentUserFollowsUser.followeeId', '=', 'User.id')
+    )
+    .select((eb) => [
+      'User.id',
+      'User.name',
+      'User.handle',
+      'User.image',
+      'User.description',
+      eb
+        .case()
+        .when(eb.ref('CurrentUserFollowsUser.id'), 'is not', null)
+        .then(true)
+        .else(false)
+        .end()
+        .as('following'),
+      eb.fn.count<string>('Follow.id').distinct().as('followersCount'),
+    ])
+    .groupBy(['User.id', 'CurrentUserFollowsUser.id'])
+
+  if (emailVerified) {
+    peopleQuery = peopleQuery.where('User.emailVerified', 'is not', null)
+  }
+
+  if (nextCursor) {
+    const sign = order === 'asc' ? '>=' : '<='
+    peopleQuery = peopleQuery.where('User.id', sign, nextCursor)
+  }
+
+  return peopleQuery.limit(limit + 1)
 }
