@@ -57,6 +57,19 @@ export const getUserByEmail = async (email: string) => {
     .executeTakeFirst()
 }
 
+export const fetchPeople = async (
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const people = await peopleQuery(nextCursor, limit, order, currentUser.id)
+    .orderBy('User.id', order)
+    .execute()
+
+  return paginate<ResultType<typeof people>>(people, limit)
+}
+
 export const getUserFollowing = async (
   handle: string,
   nextCursor: CursorType = null,
