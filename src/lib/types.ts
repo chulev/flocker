@@ -13,6 +13,19 @@ export type LoaderType<T extends (...args: any[]) => any> = Awaited<
   ReturnType<T>
 >['data'][number]
 
+export type Reply = {
+  content: string
+  id: string
+  userName: string
+  userImage: string | null
+  userHandle: string
+  imgPath: string | null
+  likeCount: string
+  liked: boolean
+}
+
+export type EnrichedReply = Reply & { date: string }
+
 export type Tweet = {
   content: string
   followerOnly: boolean
@@ -28,10 +41,12 @@ export type Tweet = {
   retweetCount: string
   likeCount: string
   bookmarkCount: string
+  following: boolean
 }
 
 export type EnrichedTweet = Tweet & {
   date: string
+  replies: PaginatedResponse<EnrichedReply>
   reactions: {
     retweeted: boolean
     liked: boolean

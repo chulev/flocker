@@ -5,13 +5,16 @@ import { cx } from 'class-variance-authority'
 import ErrorIcon from 'public/error.svg'
 import RefreshIcon from 'public/refresh.svg'
 
+import { fetchTweetReplies } from '@/data/tweet'
 import { getCurrentUserOrThrow } from '@/lib/auth'
-import type { EnrichedTweet } from '@/lib/types'
+import type { EnrichedTweet, LoaderType } from '@/lib/types'
 
 import { Avatar } from '../avatar'
 import { Divider } from '../divider'
 import { Image } from '../image'
 import { Link } from '../link'
+import { TweetMenu } from './menu'
+import { ReplyList } from './reply-list'
 
 type Props = EnrichedTweet & {
   currentUser: Awaited<ReturnType<typeof getCurrentUserOrThrow>>
@@ -20,8 +23,11 @@ type Props = EnrichedTweet & {
 
 export const Tweet = ({
   content,
+  id,
   date,
+  currentUser,
   retweetId,
+  reactions,
   userName,
   userImage,
   userHandle,
@@ -29,6 +35,9 @@ export const Tweet = ({
   retweeterHandle,
   imgPath,
   deleted,
+  replies,
+  followerOnly,
+  following,
 }: Props) => {
   return (
     <article className={cx('flex flex-col', { 'opacity-50': deleted })}>
@@ -70,6 +79,26 @@ export const Tweet = ({
           </div>
         )}
         <Divider />
+        <TweetMenu
+          tweetId={id}
+          retweetId={retweetId}
+          currentUser={currentUser}
+          retweeted={reactions.retweeted}
+          liked={reactions.liked}
+          saved={reactions.saved}
+          followerOnly={
+            currentUser.handle !== userHandle && followerOnly && !following
+          }
+          deleted={deleted}
+        />
+        <Divider />
+        <ReplyList<LoaderType<typeof fetchTweetReplies>>
+          initialReplies={replies}
+          route={`/api/${id}/replies?f=1`}
+          followerOnly={
+            currentUser.handle !== userHandle && followerOnly && !following
+          }
+        />
         {deleted && (
           <div className='absolute right-3 top-3 flex items-center text-sm text-scarlet'>
             <ErrorIcon />

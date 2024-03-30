@@ -103,7 +103,20 @@ export const TWEET_SCHEMA = z.object({
   followerOnly: z.enum(['Y', 'N']),
 })
 
+export const REPLY_SCHEMA = z.object({
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: 'Reply cannot be empty' })
+    .max(MAX_CONTENT_LENGTH, {
+      message: `Reply cannot exceed ${MAX_CONTENT_LENGTH} symbols`,
+    }),
+  img: IMG_PICKER_SCHEMA,
+  followerOnly: z.enum(['Y', 'N']),
+})
+
 export const DEFAULT_LIMIT = 10
+export const REPLY_LIMIT = 5
 export const NEXT_CURSOR_SCHEMA = z.string().nullable()
 export const LIMIT_SCHEMA = z
   .string()
