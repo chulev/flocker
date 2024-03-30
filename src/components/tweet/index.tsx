@@ -10,6 +10,7 @@ import { getCurrentUserOrThrow } from '@/lib/auth'
 import type { EnrichedTweet, LoaderType } from '@/lib/types'
 
 import { Avatar } from '../avatar'
+import { Count } from '../count'
 import { Divider } from '../divider'
 import { Image } from '../image'
 import { Link } from '../link'
@@ -33,6 +34,10 @@ export const Tweet = ({
   userHandle,
   retweeterName,
   retweeterHandle,
+  replyCount,
+  retweetCount,
+  likeCount,
+  bookmarkCount,
   imgPath,
   deleted,
   replies,
@@ -78,6 +83,32 @@ export const Tweet = ({
             />
           </div>
         )}
+        <div className="flex justify-end [&>*+*:before]:content-['\00a0•\00a0']">
+          <Count
+            className='text-xs text-ashen'
+            count={replyCount}
+            singular='reply'
+            plural='replies'
+          />
+          <Count
+            className='text-xs text-ashen'
+            count={retweetCount}
+            singular='retweet'
+            plural='retweets'
+          />
+          <Count
+            className='text-xs text-ashen'
+            count={likeCount}
+            singular='like'
+            plural='likes'
+          />
+          <Count
+            className='text-xs text-ashen'
+            count={bookmarkCount}
+            singular='save'
+            plural='saves'
+          />
+        </div>
         <Divider />
         <TweetMenu
           tweetId={id}
