@@ -90,6 +90,20 @@ const IMG_PICKER_SCHEMA = z
     return ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)
   }, 'Only .jpg, .jpeg, .png and .webp formats are supported')
 
+export const MAX_BIO_LENGTH = 250
+export const SETTINGS_SCHEMA = z.object({
+  name: NAME_SCHEMA,
+  handle: HANDLE_SCHEMA,
+  bio: z
+    .string()
+    .trim()
+    .max(MAX_BIO_LENGTH, {
+      message: `Bio cannot exceed ${MAX_BIO_LENGTH} symbols`,
+    }),
+  avatar: IMG_PICKER_SCHEMA,
+  cover: IMG_PICKER_SCHEMA,
+})
+
 export const MAX_CONTENT_LENGTH = 180
 export const TWEET_SCHEMA = z.object({
   content: z

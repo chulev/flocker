@@ -15,7 +15,6 @@ export const {
   auth,
   signIn,
   signOut,
-  update,
 } = NextAuth({
   pages: {
     signIn: SIGN_IN_PATH,
