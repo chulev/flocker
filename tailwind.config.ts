@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 import { createThemes } from 'tw-colors'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -37,6 +38,17 @@ const config: Config = {
         ashen: '#6e6e6e',
         foggy: '#f2f2f2',
         charcoal: '#2e2e2e',
+      },
+      dark: {
+        sky: '#5096f1',
+        pure: '#192734',
+        verdant: '#27ae60',
+        scarlet: '#ec6060',
+        slate: '#828282',
+        mist: '#333333',
+        ashen: '#8899a6',
+        foggy: '#22303c',
+        charcoal: '#ffffff',
       },
     }),
   ],

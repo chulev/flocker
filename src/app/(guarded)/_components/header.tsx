@@ -1,4 +1,5 @@
 import { Logo } from '@/app/_components/logo'
+import { ThemePicker } from '@/components/theme-picker'
 import { UserMenu } from '@/components/user/menu'
 import { fetchUser } from '@/lib/auth'
 
@@ -14,6 +15,7 @@ export const Header = async () => {
       <Logo />
       <MainNav />
       <div className='flex items-center gap-2'>
+        <ThemePicker theme={currentUser.theme} />
         <UserMenu
           name={currentUser.name}
           handle={currentUser.handle}

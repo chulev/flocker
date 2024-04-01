@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export const THEME_SCHEMA = z.enum(['light', 'dark'])
+
 export const MAX_NAME_LENGTH = 70
 export const MAX_HANDLE_LENGTH = 30
 const NAME_SCHEMA = z

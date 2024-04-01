@@ -1,3 +1,5 @@
+export type Theme = 'light' | 'dark'
+
 export type CursorType = string | null
 
 export type Order = 'asc' | 'desc'

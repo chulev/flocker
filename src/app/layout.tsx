@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import '@/app/globals.css'
+import { fetchUser } from '@/lib/auth'
 
 const font = Inter({
   weight: ['400', '500', '600'],
@@ -20,8 +21,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const currentUser = await fetchUser()
+
   return (
-    <html lang='en' data-theme='light'>
+    <html lang='en' data-theme={currentUser?.theme || 'light'}>
       <body className={cx('grid min-h-screen font-sans', font.variable)}>
         {children}
       </body>
