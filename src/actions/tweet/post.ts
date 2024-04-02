@@ -2,6 +2,7 @@
 
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
+import { findHashtags, getHashtag } from '@/lib/hashtag'
 import { formDataToValues } from '@/lib/serialize'
 import { TWEET_SCHEMA } from '@/lib/validations'
 
@@ -11,6 +12,7 @@ export const post = async (data: FormData) => {
   const deserializedValues = formDataToValues(data)
   const parsedValues = TWEET_SCHEMA.parse(deserializedValues)
   const currentUser = await getCurrentUserOrThrow()
+  const hashtags = findHashtags(parsedValues.content)
 
   const tweetId = await db.transaction().execute(async (trx) => {
     const tweet = await trx
@@ -22,6 +24,33 @@ export const post = async (data: FormData) => {
       })
       .returning(['id'])
       .executeTakeFirstOrThrow()
+
+    if (hashtags.length > 0) {
+      const hashtagIds = await trx
+        .insertInto('Hashtag')
+        .values(
+          hashtags.map((hashtag) => ({
+            value: getHashtag(hashtag),
+          }))
+        )
+        .onConflict((oc) =>
+          oc
+            .column('value')
+            .doUpdateSet((eb) => ({ value: eb.ref('Hashtag.value') }))
+        )
+        .returning(['id'])
+        .execute()
+
+      await trx
+        .insertInto('TweetHashtag')
+        .values(
+          hashtagIds.map(({ id: hashtagId }) => ({
+            tweetId: tweet.id,
+            hashtagId,
+          }))
+        )
+        .execute()
+    }
 
     if (parsedValues.img instanceof File) {
       const imgPath = await upload(parsedValues.img)

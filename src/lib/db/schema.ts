@@ -67,6 +67,11 @@ export interface Follow {
   id: Generated<string>
 }
 
+export interface Hashtag {
+  id: Generated<string>
+  value: string
+}
+
 export interface Reply {
   content: string
   id: Generated<string>
@@ -100,6 +105,12 @@ export interface TweetAttachment {
   uri: string
 }
 
+export interface TweetHashtag {
+  hashtagId: string
+  id: Generated<string>
+  tweetId: string
+}
+
 export interface TweetLike {
   id: Generated<string>
   tweetId: string
@@ -110,12 +121,14 @@ export interface DB {
   Account: Account
   Bookmark: Bookmark
   Follow: Follow
+  Hashtag: Hashtag
   Reply: Reply
   ReplyAttachment: ReplyAttachment
   ReplyLike: ReplyLike
   ResetPasswordToken: ResetPasswordToken
   Tweet: Tweet
   TweetAttachment: TweetAttachment
+  TweetHashtag: TweetHashtag
   TweetLike: TweetLike
   User: User
   VerificationToken: VerificationToken

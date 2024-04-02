@@ -2,6 +2,7 @@
 
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
+import { findHashtags, getHashtag } from '@/lib/hashtag'
 
 export const retweet = async (tweetId: string, isRetweeted: boolean) => {
   try {
@@ -21,6 +22,8 @@ export const retweet = async (tweetId: string, isRetweeted: boolean) => {
     if (tweet.retweetId) throw Error('Cannot retweet a tweet')
 
     const retweetId = await db.transaction().execute(async (trx) => {
+      const hashtags = findHashtags(tweet.content)
+
       if (isRetweeted) {
         const createdTweet = await trx
           .insertInto('Tweet')
@@ -40,6 +43,33 @@ export const retweet = async (tweetId: string, isRetweeted: boolean) => {
               uri: tweet.uri,
             })
             .executeTakeFirstOrThrow()
+        }
+
+        if (hashtags.length > 0) {
+          const hashtagIds = await trx
+            .insertInto('Hashtag')
+            .values(
+              hashtags.map((hashtag) => ({
+                value: getHashtag(hashtag),
+              }))
+            )
+            .onConflict((oc) =>
+              oc
+                .column('value')
+                .doUpdateSet((eb) => ({ value: eb.ref('Hashtag.value') }))
+            )
+            .returning(['id'])
+            .execute()
+
+          await trx
+            .insertInto('TweetHashtag')
+            .values(
+              hashtagIds.map(({ id: hashtagId }) => ({
+                tweetId: createdTweet.id,
+                hashtagId,
+              }))
+            )
+            .execute()
         }
 
         return createdTweet.id
@@ -113,6 +143,13 @@ export const retweet = async (tweetId: string, isRetweeted: boolean) => {
           await trx
             .deleteFrom('TweetAttachment')
             .where('TweetAttachment.tweetId', '=', retweet.id)
+            .execute()
+        }
+
+        if (hashtags.length > 0) {
+          await trx
+            .deleteFrom('TweetHashtag')
+            .where('TweetHashtag.tweetId', '=', retweet.id)
             .execute()
         }
 

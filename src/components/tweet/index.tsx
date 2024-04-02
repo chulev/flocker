@@ -7,6 +7,7 @@ import RefreshIcon from 'public/refresh.svg'
 
 import { fetchTweetReplies } from '@/data/tweet'
 import { getCurrentUserOrThrow } from '@/lib/auth'
+import { getHashtag, isHashtag } from '@/lib/hashtag'
 import type { EnrichedTweet, LoaderType } from '@/lib/types'
 
 import { Avatar } from '../avatar'
@@ -16,6 +17,25 @@ import { Image } from '../image'
 import { Link } from '../link'
 import { TweetMenu } from './menu'
 import { ReplyList } from './reply-list'
+
+const hashifyContent = (content: string) => {
+  const hashifiedContent = content.split(' ').map((word, index) => {
+    if (isHashtag(word)) {
+      return (
+        <Link
+          variant='highlight'
+          key={index}
+          href={`/hashtag/${getHashtag(word)}`}
+        >
+          {`${word} `}
+        </Link>
+      )
+    }
+    return `${word} `
+  })
+
+  return <p className='my-2 text-sm text-charcoal'>{hashifiedContent}</p>
+}
 
 type Props = EnrichedTweet & {
   currentUser: Awaited<ReturnType<typeof getCurrentUserOrThrow>>
@@ -72,7 +92,7 @@ export const Tweet = ({
             <span className='text-xs text-ashen'>{date}</span>
           </div>
         </div>
-        {content}
+        {hashifyContent(content)}
         {imgPath && (
           <div className='relative mb-2 h-64 w-full'>
             <Image
