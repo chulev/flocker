@@ -3,6 +3,7 @@ import { Metadata } from 'next/types'
 import { SidebarLayout } from '@/app/(guarded)/_components/sidebar-layout'
 import { fetchUser } from '@/lib/auth'
 
+import { Trending } from '../_components/trending'
 import { Settings } from './_components/settings'
 
 export const metadata: Metadata = {
@@ -15,6 +16,9 @@ export default async function SettingsPage() {
 
   return (
     <SidebarLayout>
+      <SidebarLayout.Sidebar>
+        <Trending />
+      </SidebarLayout.Sidebar>
       <SidebarLayout.Content>
         <Settings currentUser={currentUser} />
       </SidebarLayout.Content>

@@ -133,6 +133,8 @@ export const REPLY_SCHEMA = z.object({
 
 export const DEFAULT_LIMIT = 10
 export const REPLY_LIMIT = 5
+export const HASHTAG_LIMIT = 5
+export const WHO_TO_FOLLOW_LIMIT = 5
 export const NEXT_CURSOR_SCHEMA = z.string().nullable()
 export const LIMIT_SCHEMA = z
   .string()

@@ -3,7 +3,7 @@ import { db } from '@/lib/db/client'
 import { peopleQuery } from '@/lib/db/queries'
 import { paginate } from '@/lib/paginate'
 import { CursorType, Order, ResultType } from '@/lib/types'
-import { DEFAULT_LIMIT } from '@/lib/validations'
+import { DEFAULT_LIMIT, WHO_TO_FOLLOW_LIMIT } from '@/lib/validations'
 
 export const getUserProfileByHandle = async (handle: string) => {
   return await db
@@ -55,6 +55,39 @@ export const getUserByEmail = async (email: string) => {
     .select(['id', 'email', 'handle', 'emailVerified'])
     .where('email', '=', email)
     .executeTakeFirst()
+}
+
+export const fetchWhoToFollow = async (
+  nextCursor: CursorType = null,
+  limit: number = WHO_TO_FOLLOW_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const whoToFollow = await peopleQuery(
+    nextCursor,
+    limit,
+    order,
+    currentUser.id
+  )
+    .leftJoin(
+      (qb) =>
+        qb
+          .selectFrom('Follow')
+          .select('Follow.followeeId')
+          .where('Follow.followerId', '=', currentUser.id)
+          .as('Follows'),
+      (join) => join.onRef('User.id', '=', 'Follows.followeeId')
+    )
+    .where((eb) =>
+      eb.and([
+        eb('Follows.followeeId', 'is', null),
+        eb('User.id', '!=', currentUser.id),
+      ])
+    )
+    .orderBy('User.id', order)
+    .execute()
+
+  return paginate<ResultType<typeof whoToFollow>>(whoToFollow, limit)
 }
 
 export const fetchPeople = async (
