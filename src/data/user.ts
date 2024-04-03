@@ -49,6 +49,14 @@ export const getUserByHandle = async (handle: string) => {
     .executeTakeFirstOrThrow()
 }
 
+export const fetchUserByHandle = async (handle: string) => {
+  const currentUser = await getCurrentUserOrThrow()
+
+  return await peopleQuery(null, 1, 'desc', currentUser.id)
+    .where('User.handle', '=', handle)
+    .executeTakeFirstOrThrow()
+}
+
 export const getUserByEmail = async (email: string) => {
   return await db
     .selectFrom('User')

@@ -49,6 +49,15 @@ const enrichTweets = async (
   return paginate<ResultType<typeof result>>(result, limit)
 }
 
+export const fetchReply = async (id: string) => {
+  const currentUser = await getCurrentUserOrThrow()
+
+  return await repliesQuery(null, currentUser.id, null, 1, 'desc')
+    .select(['Reply.tweetId'])
+    .where('Reply.id', '=', id)
+    .executeTakeFirstOrThrow()
+}
+
 export const fetchTweet = async (id: string) => {
   const currentUser = await getCurrentUserOrThrow()
   const tweet = await tweetsQuery(null, 1, 'desc', currentUser.id)

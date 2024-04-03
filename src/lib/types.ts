@@ -1,3 +1,6 @@
+import { fetchReply, fetchTweet } from '@/data/tweet'
+import { fetchUserByHandle } from '@/data/user'
+
 export type Theme = 'light' | 'dark'
 
 export type CursorType = string | null
@@ -63,4 +66,29 @@ export type UserCard = {
   name: string
   followersCount: string
   following: boolean
+}
+
+export type EventMap = {
+  PING: { content: string }
+  TWEET: Awaited<ReturnType<typeof fetchTweet>>
+  REPLY: Awaited<ReturnType<typeof fetchReply>>
+  RETWEET: Awaited<ReturnType<typeof fetchTweet>>
+  UNDO_RETWEET: {
+    handle: string
+    id: string
+    retweetId: string | null
+    img: string | null | undefined
+    hashtags: string | null
+  }
+  TWEET_LIKE: { tweetId: string; handle: string }
+  TWEET_UNDO_LIKE: { tweetId: string; handle: string }
+  SAVE: { handle: string; tweet: Awaited<ReturnType<typeof fetchTweet>> }
+  UNDO_SAVE: { tweetId: string; handle: string }
+  REPLY_LIKE: { replyId: string; handle: string }
+  REPLY_UNDO_LIKE: { replyId: string; handle: string }
+  FOLLOW: {
+    follower: Awaited<ReturnType<typeof fetchUserByHandle>>
+    followee: Awaited<ReturnType<typeof fetchUserByHandle>>
+  }
+  UNFOLLOW: { followerHandle: string; followeeHandle: string }
 }
