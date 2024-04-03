@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 
 import {
   fetchBookmarkedTweets,
+  fetchHomeTweets,
   fetchLatestTweets,
   fetchMediaTweets,
   fetchTopTweets,
@@ -29,20 +30,20 @@ export async function GET(request: NextRequest) {
   let response: PaginatedResponse<EnrichedTweet>
 
   switch (filter) {
-    case 'top':
-      response = await fetchTopTweets(nextCursor, limit, order)
+    case 'home':
+      response = await fetchHomeTweets(nextCursor, limit, order)
       break
     case 'latest':
       response = await fetchLatestTweets(nextCursor, limit, order)
+      break
+    case 'top':
+      response = await fetchTopTweets(nextCursor, limit, order)
       break
     case 'media':
       response = await fetchMediaTweets(nextCursor, limit, order)
       break
     case 'bookmarks':
       response = await fetchBookmarkedTweets(nextCursor, limit, order)
-      break
-    default:
-      response = await fetchLatestTweets(nextCursor, limit, order)
       break
   }
 
