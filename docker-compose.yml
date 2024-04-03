@@ -20,5 +20,22 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    container_name: redis
+    image: redis:latest
+    command: ['redis-server', '--requirepass pass']
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli', '-a', 'pass', '--raw', 'incr', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+      - redis-config:/usr/local/etc/redis/redis.conf
+
 volumes:
   postgres_data:
+  redis:
+  redis-config:
