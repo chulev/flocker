@@ -230,3 +230,20 @@ export const fetchTweetReplies = async (
 
   return paginate<ResultType<typeof result>>(result, limit)
 }
+
+export const fetchTweetsByHashtag = async (
+  hashtag: string,
+  nextCursor: CursorType = null,
+  limit: number = DEFAULT_LIMIT,
+  order: Order = 'desc'
+) => {
+  const currentUser = await getCurrentUserOrThrow()
+  const tweets = await tweetsQuery(nextCursor, limit, order, currentUser.id)
+    .innerJoin('TweetHashtag', 'TweetHashtag.tweetId', 'Tweet.id')
+    .leftJoin('Hashtag', 'Hashtag.id', 'TweetHashtag.hashtagId')
+    .where('Hashtag.value', '=', hashtag)
+    .orderBy('Tweet.id', order)
+    .execute()
+
+  return enrichTweets(tweets, currentUser, limit)
+}
