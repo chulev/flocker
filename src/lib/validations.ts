@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export const MAIN_CHANNEL_KEY = 'all'
+
 export const THEME_SCHEMA = z.enum(['light', 'dark'])
 
 export const MAX_NAME_LENGTH = 70
