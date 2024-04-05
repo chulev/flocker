@@ -2,6 +2,8 @@
 
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
+import { publish } from '@/lib/store/client'
+import { MAIN_CHANNEL_KEY } from '@/lib/validations'
 
 export const likeReply = async (replyId: string, isLiked: boolean) => {
   try {
@@ -15,6 +17,11 @@ export const likeReply = async (replyId: string, isLiked: boolean) => {
           userId: currentUser.id,
         })
         .executeTakeFirstOrThrow()
+
+      await publish(MAIN_CHANNEL_KEY, {
+        type: 'REPLY_LIKE',
+        data: { replyId, handle: currentUser.handle },
+      })
     } else {
       const deletedLike = await db
         .deleteFrom('ReplyLike')
@@ -28,6 +35,11 @@ export const likeReply = async (replyId: string, isLiked: boolean) => {
         .executeTakeFirst()
 
       if (!deletedLike?.id) throw Error('Could not delete like')
+
+      await publish(MAIN_CHANNEL_KEY, {
+        type: 'REPLY_UNDO_LIKE',
+        data: { replyId, handle: currentUser.handle },
+      })
     }
   } catch (_) {
     throw Error(`Failed to ${isLiked ? 'like' : 'unlike'} reply`)

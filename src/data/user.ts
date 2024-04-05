@@ -8,6 +8,8 @@ import { DEFAULT_LIMIT, WHO_TO_FOLLOW_LIMIT } from '@/lib/validations'
 export const getUserProfileByHandle = async (handle: string) => {
   return await db
     .selectFrom('User')
+    .leftJoin('Follow as Following', 'Following.followerId', 'User.id')
+    .leftJoin('Follow as Followers', 'Followers.followeeId', 'User.id')
     .select((eb) => [
       'User.id',
       'User.name',
@@ -15,6 +17,8 @@ export const getUserProfileByHandle = async (handle: string) => {
       'User.image',
       'User.cover',
       'User.description',
+      eb.fn.count<string>('Following.id').distinct().as('followingCount'),
+      eb.fn.count<string>('Followers.id').distinct().as('followersCount'),
     ])
     .where('User.handle', '=', handle)
     .groupBy(['User.id'])

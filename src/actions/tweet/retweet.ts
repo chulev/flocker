@@ -1,8 +1,11 @@
 'use server'
 
+import { fetchTweet } from '@/data/tweet'
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { findHashtags, getHashtag } from '@/lib/hashtag'
+import { publish } from '@/lib/store/client'
+import { MAIN_CHANNEL_KEY } from '@/lib/validations'
 
 export const retweet = async (tweetId: string, isRetweeted: boolean) => {
   try {
@@ -161,9 +164,29 @@ export const retweet = async (tweetId: string, isRetweeted: boolean) => {
 
         if (!deletedRetweet?.id) throw Error('Could not delete retweet')
 
+        await publish(MAIN_CHANNEL_KEY, {
+          type: 'UNDO_RETWEET',
+          data: {
+            handle: currentUser.handle,
+            id: retweet.id,
+            retweetId: retweet.retweetId,
+            img: tweet.uri,
+            hashtags: findHashtags(tweet.content).join(' '),
+          },
+        })
+
         return retweet.id
       }
     })
+
+    if (isRetweeted) {
+      const createdRetweet = await fetchTweet(retweetId)
+
+      await publish(MAIN_CHANNEL_KEY, {
+        type: 'RETWEET',
+        data: createdRetweet,
+      })
+    }
   } catch (err) {
     throw Error(`Failed to ${isRetweeted ? 'retweet' : 'delete retweet'}`)
   }

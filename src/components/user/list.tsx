@@ -1,13 +1,18 @@
 'use client'
 
+import { cx } from 'class-variance-authority'
+import { useState } from 'react'
+
 import BinocularsIcon from 'public/binoculars.svg'
 
 import { UserCard } from '@/components/user/card'
 import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
+import { useSSE } from '@/hooks/use-sse'
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import type { PaginatedResponse, UserCard as UserCardType } from '@/lib/types'
 
 import { Button } from '../button'
+import { LoadNew } from '../load-new'
 import { UserCardSkeleton } from './skeleton'
 
 type Props<T> = {
@@ -29,6 +34,7 @@ export const UserList = <T extends UserCardType>({
 }: Props<T>) => {
   const {
     data: users,
+    setData: setUsers,
     isLoading,
     isError,
     hasMore,
@@ -40,9 +46,81 @@ export const UserList = <T extends UserCardType>({
     manual,
     initialData: initialUsers,
   })
+  const [newUsers, setNewUsers] = useState<T[]>([])
+
+  useSSE({
+    FOLLOW: (follow) => {
+      const user = users.find((user) => user.handle === follow.followee.handle)
+
+      if (user) {
+        const newUsers = users.map((user) =>
+          user.handle === follow.followee.handle
+            ? {
+                ...user,
+                followersCount: `${parseInt(user.followersCount, 10) + 1}`,
+                ...(currentUser.handle === follow.follower.handle && {
+                  following: true,
+                }),
+              }
+            : user
+        )
+        setUsers(newUsers)
+      } else if (
+        [`/api/${follow.follower.handle}/following/?f=1`].includes(route)
+      ) {
+        setNewUsers((prevUsers) => [follow.followee, ...prevUsers] as T[])
+      } else if (
+        [`/api/${follow.followee.handle}/followers/?f=1`].includes(route)
+      ) {
+        setNewUsers((prevUsers) => [follow.follower, ...prevUsers] as T[])
+      }
+    },
+    UNFOLLOW: (follow) => {
+      const user = users.find((user) => user.handle === follow.followeeHandle)
+
+      if (user) {
+        const newUsers = users.map((user) =>
+          user.handle === follow.followeeHandle
+            ? {
+                ...user,
+                followersCount: `${parseInt(user.followersCount, 10) - 1}`,
+                ...(currentUser.handle === follow.followerHandle && {
+                  following: false,
+                }),
+              }
+            : user
+        )
+        setUsers(newUsers)
+      } else if (
+        [`/api/${follow.followerHandle}/following/?f=1`].includes(route)
+      ) {
+        setNewUsers((prevUsers) =>
+          prevUsers.filter((user) => user.handle !== follow.followeeHandle)
+        )
+      } else if (
+        [`/api/${follow.followeeHandle}/followers/?f=1`].includes(route)
+      ) {
+        setNewUsers((prevUsers) =>
+          prevUsers.filter((user) => user.handle !== follow.followerHandle)
+        )
+      }
+    },
+  })
 
   return (
     <section className='grid gap-3'>
+      {newUsers.length > 0 && (
+        <LoadNew
+          className={cx(inModal ? 'top-[5px]' : 'top-[80px]')}
+          onLoadNew={() => {
+            setUsers([...newUsers, ...users])
+            setNewUsers([])
+          }}
+          newCount={newUsers.length}
+          singular='new user'
+          plural='new users'
+        />
+      )}
       {users.map((user) => (
         <UserCard key={user.handle} currentUser={currentUser} {...user} />
       ))}

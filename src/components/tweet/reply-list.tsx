@@ -4,6 +4,7 @@ import PeopleIcon from 'public/people.svg'
 import RefreshIcon from 'public/refresh.svg'
 
 import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
+import { useSSE } from '@/hooks/use-sse'
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import type { EnrichedReply, PaginatedResponse } from '@/lib/types'
 import { REPLY_LIMIT } from '@/lib/validations'
@@ -12,18 +13,23 @@ import { Button } from '../button'
 import { Reply } from './reply'
 
 type Props<T> = {
+  tweetId: string
   followerOnly: boolean
   route: string
+  currentUser: Awaited<ReturnType<typeof getCurrentUserOrThrow>>
   initialReplies: PaginatedResponse<T>
 }
 
 export const ReplyList = <T extends EnrichedReply>({
+  tweetId,
   followerOnly,
   route,
+  currentUser,
   initialReplies,
 }: Props<T>) => {
   const {
     data: replies,
+    setData: setReplies,
     isLoading,
     isError,
     hasMore,
@@ -33,6 +39,47 @@ export const ReplyList = <T extends EnrichedReply>({
     route,
     limit: REPLY_LIMIT,
     manual: true,
+  })
+
+  useSSE({
+    REPLY: (reply) => {
+      if (reply.tweetId === tweetId) {
+        const { tweetId, ...newReply } = reply
+        setReplies([newReply as T, ...replies])
+      }
+    },
+    REPLY_LIKE: (like) => {
+      const reply = replies.find((reply) => reply.id === like.replyId)
+
+      if (reply) {
+        const newReplies = replies.map((reply) =>
+          reply.id === like.replyId
+            ? {
+                ...reply,
+                likeCount: `${parseInt(reply.likeCount, 10) + 1}`,
+                ...(currentUser.handle === like.handle && { liked: true }),
+              }
+            : reply
+        )
+        setReplies(newReplies)
+      }
+    },
+    REPLY_UNDO_LIKE: (like) => {
+      const reply = replies.find((reply) => reply.id === like.replyId)
+
+      if (reply) {
+        const newReplies = replies.map((reply) =>
+          reply.id === like.replyId
+            ? {
+                ...reply,
+                likeCount: `${parseInt(reply.likeCount, 10) - 1}`,
+                ...(currentUser.handle === like.handle && { liked: false }),
+              }
+            : reply
+        )
+        setReplies(newReplies)
+      }
+    },
   })
 
   return (

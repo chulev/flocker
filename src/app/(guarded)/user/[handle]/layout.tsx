@@ -9,17 +9,22 @@ import { doesCurrentUserFollow, getUserProfileByHandle } from '@/data/user'
 import { getCurrentUser } from '@/lib/auth'
 
 import { SidebarLayout } from '../../_components/sidebar-layout'
+import { Counters } from './_components/counters'
 
 const ACTIVE_CLASS_NAME = 'text-sky border-l-4 border-l-sky pb-3 pl-2'
 
 type Props = {
   children: React.ReactNode
   params: { handle: string }
+  following: React.ReactNode
+  followers: React.ReactNode
 }
 
 export default async function UserLayout({
-  params: { handle },
   children,
+  params: { handle },
+  following,
+  followers,
 }: Props) {
   const currentUser = await getCurrentUser()
   const user = await getUserProfileByHandle(handle)
@@ -67,6 +72,7 @@ export default async function UserLayout({
                     <span className='text-lg text-charcoal max-sm:text-center max-sm:text-md md:mr-4'>
                       {user.name} {currentUser.id === user.id && '(You)'}
                     </span>
+                    <Counters user={user} />
                   </div>
                   {user.description && (
                     <span className='mb-4 text-sm text-charcoal max-sm:text-center'>
@@ -123,6 +129,8 @@ export default async function UserLayout({
           </SidebarLayout>
         </section>
       </section>
+      {following}
+      {followers}
     </>
   )
 }

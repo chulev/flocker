@@ -1,10 +1,12 @@
 'use server'
 
+import { fetchTweet } from '@/data/tweet'
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { findHashtags, getHashtag } from '@/lib/hashtag'
 import { formDataToValues } from '@/lib/serialize'
-import { TWEET_SCHEMA } from '@/lib/validations'
+import { publish } from '@/lib/store/client'
+import { MAIN_CHANNEL_KEY, TWEET_SCHEMA } from '@/lib/validations'
 
 import { upload } from '../upload'
 
@@ -67,5 +69,12 @@ export const post = async (data: FormData) => {
     }
 
     return tweet.id
+  })
+
+  const createdTweet = await fetchTweet(tweetId)
+
+  await publish(MAIN_CHANNEL_KEY, {
+    type: 'TWEET',
+    data: createdTweet,
   })
 }

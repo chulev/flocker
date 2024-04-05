@@ -1,9 +1,11 @@
 'use server'
 
+import { fetchReply } from '@/data/tweet'
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { formDataToValues } from '@/lib/serialize'
-import { REPLY_SCHEMA } from '@/lib/validations'
+import { publish } from '@/lib/store/client'
+import { MAIN_CHANNEL_KEY, REPLY_SCHEMA } from '@/lib/validations'
 
 import { upload } from '../upload'
 
@@ -63,4 +65,8 @@ export const reply = async (tweetId: string, data: FormData) => {
 
     return reply.id
   })
+
+  const createdReply = await fetchReply(replyId)
+
+  await publish(MAIN_CHANNEL_KEY, { type: 'REPLY', data: createdReply })
 }
