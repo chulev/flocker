@@ -144,8 +144,10 @@ export const Tweet = ({
         />
         <Divider />
         <ReplyList<LoaderType<typeof fetchTweetReplies>>
+          tweetId={id}
           initialReplies={replies}
           route={`/api/${id}/replies?f=1`}
+          currentUser={currentUser}
           followerOnly={
             currentUser.handle !== userHandle && followerOnly && !following
           }
