@@ -1,6 +1,39 @@
 version: '3.8'
 
 services:
+  flocker:
+    container_name: flocker
+    build:
+      context: .
+      target: dev
+    command: bun dev
+    restart: always
+    env_file: .env.local
+    depends_on:
+      flocker-migration:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+
+  flocker-migration:
+    container_name: flocker-migration
+    build:
+      context: .
+      target: dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env.local
+    command: bun db:migrate latest
+
   postgres:
     container_name: postgres
     build:
