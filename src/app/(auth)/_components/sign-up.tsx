@@ -109,7 +109,7 @@ export const SignUp = () => {
         Register
       </Button>
       <div className='mt-8 flex flex-col items-center text-xs'>
-        <Link className='text-xs hover:text-charcoal' href={SIGN_IN_PATH}>
+        <Link size='xs' href={SIGN_IN_PATH}>
           Already have an account? Sign in
         </Link>
       </div>

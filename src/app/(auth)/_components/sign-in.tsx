@@ -88,6 +88,11 @@ export const SignIn = () => {
         <GoogleIcon />
         <span className='ml-1'>Sign in with Google</span>
       </Button>
+      <div className='mt-8 flex justify-center'>
+        <Link size='xs' href='/sign-up'>
+          New to Flocker? Sign up
+        </Link>
+      </div>
     </form>
   )
 }
