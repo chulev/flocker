@@ -4,10 +4,12 @@
 A Twitter clone built from scratch with Next.js + TypeScript. \
 Deployed on <a href="https://flocker.top" target="_blank">flocker.top</a>
 
-<img src="https://github.com/chulev/project/assets/5923025/63e2e13d-9791-401c-8f2f-cdec0d5440dc" alt="Flocker home light theme" height="250" />
-<img src="https://github.com/chulev/project/assets/5923025/d3bea6a1-0dec-4592-9b52-0cdf4d1c0145" alt="Flocker home dark theme" height="250" />
-<img src="https://github.com/chulev/project/assets/5923025/8236585e-4f84-45d4-94e7-8032a93911a0" alt="Flocker profile page" height="250" />
-<img src="https://github.com/chulev/project/assets/5923025/bf583aeb-5dae-4e0f-b879-e6757bdcf3f7" alt="Flocker home mobile" height="250" />
+<div style="flex">
+  <img src="images/flocker-home-light-theme.png" alt="Flocker home light theme" height="250" />
+  <img src="images/flocker-home-dark-theme.png" alt="Flocker home dark theme" height="250" />
+  <img src="images/flocker-profile-page.png" alt="Flocker profile page" height="250" />
+  <img src="images/flocker-home-mobile-view.png" alt="Flocker home mobile" height="250" />
+</div>
 
 ## Features
 
