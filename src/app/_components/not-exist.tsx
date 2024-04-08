@@ -1,5 +1,7 @@
 import NotExistIcon from 'public/not-exist.svg'
 
+import { Link } from '@/components/link'
+
 export const NotExist = () => (
   <section className='flex h-full items-center bg-foggy'>
     <div className='mx-auto my-2 flex flex-col items-center justify-center'>
@@ -7,6 +9,9 @@ export const NotExist = () => (
       <p className='mb-8 text-md font-semibold text-charcoal md:text-md'>
         Page not found
       </p>
+      <Link variant='quaternary' className='w-fit' href='/'>
+        Back to Home
+      </Link>
     </div>
   </section>
 )
