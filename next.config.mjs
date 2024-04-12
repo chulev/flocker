@@ -32,6 +32,9 @@ const nextConfig = {
   },
   reactStrictMode: true,
   experimental: {
+    staleTimes: {
+      dynamic: 0,
+    },
     turbo: {
       rules: {
         '*.svg': {
