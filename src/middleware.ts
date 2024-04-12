@@ -33,5 +33,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api)(.*)'],
+  matcher: ['/((?!api|static|.*\\..*|_next).*)'],
 }
