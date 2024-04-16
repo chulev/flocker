@@ -30,7 +30,7 @@ export const ForgotPassword = () => {
           A password reset link has been sent to your email address
         </div>
         <div className='mt-8 flex flex-col items-center text-xs'>
-          <Link className='text-xs hover:text-charcoal' href={SIGN_IN_PATH}>
+          <Link size='xs' href={SIGN_IN_PATH}>
             Return to sign in
           </Link>
         </div>
@@ -50,7 +50,7 @@ export const ForgotPassword = () => {
       />
       {form.errors.email && <FormError message={form.errors.email} />}
       <div className='my-4 flex justify-end'>
-        <Link className='text-xs hover:text-charcoal' href={SIGN_IN_PATH}>
+        <Link size='xs' href={SIGN_IN_PATH}>
           Return to sign in
         </Link>
       </div>

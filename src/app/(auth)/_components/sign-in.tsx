@@ -63,7 +63,7 @@ export const SignIn = () => {
         <FormError message='Sign in failed' />
       )}
       <div className='my-4 flex justify-end'>
-        <Link className='text-xs hover:text-charcoal' href='/forgot-password'>
+        <Link size='xs' href='/forgot-password'>
           Forgot password?
         </Link>
       </div>

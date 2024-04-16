@@ -33,7 +33,7 @@ export default async function VerifyPage({ params: { token } }: Props) {
         Your email has been verified successfully.
       </div>
       <div className='mt-8 flex flex-col items-center text-xs'>
-        <Link className='text-xs hover:text-charcoal' href={SIGN_IN_PATH}>
+        <Link size='xs' href={SIGN_IN_PATH}>
           Return to sign in
         </Link>
       </div>
