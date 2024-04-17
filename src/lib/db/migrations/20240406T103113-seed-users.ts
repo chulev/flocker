@@ -2,8 +2,6 @@ import { Kysely } from 'kysely'
 
 import { hash } from '@/lib/auth/password'
 
-import { generateEntitiesWithUniqueTimestamp } from '../utils'
-
 const users = [
   {
     name: 'John Smith',
@@ -168,18 +166,16 @@ const users = [
 ]
 
 export async function up(db: Kysely<any>): Promise<void> {
-  const usersToCreate = await generateEntitiesWithUniqueTimestamp(users)
-
-  await db
-    .insertInto('User')
-    .values(
-      usersToCreate.map((user) => ({
+  for (const user of users) {
+    await db
+      .insertInto('User')
+      .values({
         ...user,
         emailVerified: new Date(),
         password: hash(user.password),
-      }))
-    )
-    .execute()
+      })
+      .execute()
+  }
 }
 
 export async function down(db: Kysely<any>): Promise<void> {

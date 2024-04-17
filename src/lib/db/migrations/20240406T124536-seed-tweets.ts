@@ -3,7 +3,7 @@ import { Kysely } from 'kysely'
 import { filterUnique } from '@/lib/filter-unique'
 import { findHashtags, getHashtag } from '@/lib/hashtag'
 
-import { generateEntitiesWithUniqueTimestamp, getRandomElement } from '../utils'
+import { getRandomElement } from '../utils'
 
 const tweets = [
   {
@@ -150,34 +150,38 @@ const tweets = [
 export async function up(db: Kysely<any>): Promise<void> {
   const users = await db.selectFrom('User').select('id').execute()
   const userIds = users.map((user) => user.id)
-  const tweetsToCreate = await generateEntitiesWithUniqueTimestamp(tweets)
+  const createdTweets: { id: string; content: string }[] = []
 
-  const createdTweets = await db
-    .insertInto('Tweet')
-    .values(
-      tweetsToCreate.map((tweet) => ({
+  for (const tweet of tweets) {
+    const createdTweet = await db
+      .insertInto('Tweet')
+      .values({
         ...tweet,
         userId: getRandomElement(userIds),
-      }))
-    )
-    .returning(['id', 'content'])
-    .execute()
+      })
+      .returning(['id', 'content'])
+      .executeTakeFirstOrThrow()
 
-  const retweetsToCreate = await generateEntitiesWithUniqueTimestamp(
-    createdTweets.slice(10)
-  )
+    createdTweets.push(createdTweet)
+  }
 
-  const createdRetweets = await db
-    .insertInto('Tweet')
-    .values(
-      retweetsToCreate.map((retweet, idx) => ({
-        ...retweet,
-        userId: getRandomElement(userIds),
-        retweetId: createdTweets.slice(10)[idx].id,
-      }))
-    )
-    .returning(['id', 'content'])
-    .execute()
+  const retweets = createdTweets.slice(0, 10)
+  const createdRetweets: { id: string; content: string }[] = []
+
+  for (const [idx, retweet] of retweets.entries()) {
+    const { id, ...retweetAttrs } = retweet
+    const createdRetweet = await db
+      .insertInto('Tweet')
+      .values({
+        ...retweetAttrs,
+        userId: userIds[idx],
+        retweetId: retweets[idx].id,
+      })
+      .returning(['id', 'content'])
+      .executeTakeFirstOrThrow()
+
+    createdRetweets.push(createdRetweet)
+  }
 
   const createdTweetsWithHashtags = [...createdTweets, ...createdRetweets].map(
     (tweet) => ({
