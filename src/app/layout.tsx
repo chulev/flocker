@@ -5,6 +5,15 @@ import { Inter } from 'next/font/google'
 import '@/app/globals.css'
 import { fetchUser } from '@/lib/auth'
 
+export async function generateViewport() {
+  const currentUser = await fetchUser()
+  const usesLightTheme = currentUser?.theme === 'light'
+
+  return {
+    themeColor: usesLightTheme ? '#f2f2f2' : '#22303c',
+  }
+}
+
 const font = Inter({
   weight: ['400', '500', '600'],
   subsets: ['latin', 'cyrillic'],
@@ -25,7 +34,9 @@ export default async function RootLayout({
 
   return (
     <html lang='en' data-theme={currentUser?.theme || 'light'}>
-      <body className={cx('grid min-h-screen font-sans', font.variable)}>
+      <body
+        className={cx('grid min-h-screen bg-foggy font-sans', font.variable)}
+      >
         {children}
       </body>
     </html>
