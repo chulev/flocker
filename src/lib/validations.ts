@@ -78,6 +78,7 @@ export const ACCEPTED_IMAGE_MIME_TYPES = [
   'image/jpg',
   'image/png',
   'image/webp',
+  'image/gif',
 ]
 const MAX_FILE_SIZE = 1024 * 1024 * 10
 const IMG_PICKER_SCHEMA = z
@@ -92,7 +93,7 @@ const IMG_PICKER_SCHEMA = z
     if (!(file instanceof File)) return true
 
     return ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)
-  }, 'Only .jpg, .jpeg, .png and .webp formats are supported')
+  }, 'Only .jpg, .jpeg, .png, .gif and .webp formats are supported')
 
 export const MAX_BIO_LENGTH = 250
 export const SETTINGS_SCHEMA = z.object({
