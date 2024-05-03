@@ -42,7 +42,7 @@ export const Reply = ({
             <Link className='mr-2' href={`/user/${userHandle}`} variant='ghost'>
               {userName}
             </Link>
-            <span className='text-xs text-ashen'>
+            <span suppressHydrationWarning className='text-xs text-ashen'>
               {extractDateFromUUID(id)}
             </span>
           </div>

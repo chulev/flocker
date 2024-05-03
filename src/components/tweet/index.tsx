@@ -46,7 +46,6 @@ type Props = EnrichedTweet & {
 export const Tweet = ({
   content,
   id,
-  // date,
   currentUser,
   retweetId,
   reactions,
@@ -90,7 +89,7 @@ export const Tweet = ({
             >
               {userName}
             </Link>
-            <span className='text-xs text-ashen'>
+            <span suppressHydrationWarning className='text-xs text-ashen'>
               {extractDateFromUUID(id)}
             </span>
           </div>
