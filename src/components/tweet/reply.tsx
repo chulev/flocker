@@ -7,7 +7,8 @@ import LikeIcon from 'public/like.svg'
 
 import { likeReply } from '@/actions/tweet/like-reply'
 import { useOptimisticAction } from '@/hooks/use-optimistic-action'
-import type { EnrichedReply, Reply as ReplyType } from '@/lib/types'
+import type { Reply as ReplyType } from '@/lib/types'
+import { extractDateFromUUID } from '@/lib/uuid'
 
 import { Avatar } from '../avatar'
 import { Button } from '../button'
@@ -15,12 +16,11 @@ import { Count } from '../count'
 import { Image } from '../image'
 import { Link } from '../link'
 
-type Props = EnrichedReply
+type Props = ReplyType
 
 export const Reply = ({
   content,
   id,
-  date,
   userName,
   userImage,
   userHandle,
@@ -42,7 +42,9 @@ export const Reply = ({
             <Link className='mr-2' href={`/user/${userHandle}`} variant='ghost'>
               {userName}
             </Link>
-            <span className='text-xs text-ashen'>{date}</span>
+            <span className='text-xs text-ashen'>
+              {extractDateFromUUID(id)}
+            </span>
           </div>
           <p className='text-sm text-charcoal'>{content}</p>
           {imgPath && (

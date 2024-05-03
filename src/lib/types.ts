@@ -29,8 +29,6 @@ export type Reply = {
   liked: boolean
 }
 
-export type EnrichedReply = Reply & { date: string }
-
 export type Tweet = {
   content: string
   followerOnly: boolean
@@ -50,8 +48,7 @@ export type Tweet = {
 }
 
 export type EnrichedTweet = Tweet & {
-  date: string
-  replies: PaginatedResponse<EnrichedReply>
+  replies: PaginatedResponse<Reply>
   reactions: {
     retweeted: boolean
     liked: boolean

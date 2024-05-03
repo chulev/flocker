@@ -7,7 +7,6 @@ import {
 } from '@/lib/db/queries'
 import { paginate } from '@/lib/paginate'
 import type { CursorType, Order, ResultType, Tweet } from '@/lib/types'
-import { extractDateFromUUID } from '@/lib/uuid'
 import { DEFAULT_LIMIT, REPLY_LIMIT } from '@/lib/validations'
 
 import { getUserByHandle } from './user'
@@ -24,16 +23,10 @@ const enrichTweets = async (
     const tweetReactions = reactions.find(
       (reaction) => reaction.tweetId === tweet.id
     )
-    const tweetReplies = replies
-      .filter((reply) => reply.tweetId === tweet.id)
-      .map((reply) => ({
-        ...reply,
-        date: extractDateFromUUID(reply.id),
-      }))
+    const tweetReplies = replies.filter((reply) => reply.tweetId === tweet.id)
 
     return {
       ...tweet,
-      date: extractDateFromUUID(tweet.id),
       replies: paginate<ResultType<typeof tweetReplies>>(
         tweetReplies,
         REPLY_LIMIT
@@ -236,7 +229,7 @@ export const fetchTweetReplies = async (
   limit: number = DEFAULT_LIMIT,
   order: Order = 'desc'
 ) => {
-  const tweetReplies = await repliesQuery(
+  const result = await repliesQuery(
     tweetId,
     currentUserId,
     nextCursor,
@@ -247,10 +240,6 @@ export const fetchTweetReplies = async (
     .orderBy('Reply.id', order)
     .limit(limit + 1)
     .execute()
-  const result = tweetReplies.map((reply) => ({
-    ...reply,
-    date: extractDateFromUUID(reply.id),
-  }))
 
   return paginate<ResultType<typeof result>>(result, limit)
 }

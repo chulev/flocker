@@ -6,7 +6,7 @@ import RefreshIcon from 'public/refresh.svg'
 import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import { useSSE } from '@/hooks/use-sse'
 import { getCurrentUserOrThrow } from '@/lib/auth'
-import type { EnrichedReply, PaginatedResponse } from '@/lib/types'
+import type { PaginatedResponse, Reply as ReplyType } from '@/lib/types'
 import { REPLY_LIMIT } from '@/lib/validations'
 
 import { Button } from '../button'
@@ -20,7 +20,7 @@ type Props<T> = {
   initialReplies: PaginatedResponse<T>
 }
 
-export const ReplyList = <T extends EnrichedReply>({
+export const ReplyList = <T extends ReplyType>({
   tweetId,
   followerOnly,
   route,

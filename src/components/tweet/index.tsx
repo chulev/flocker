@@ -9,6 +9,7 @@ import { fetchTweetReplies } from '@/data/tweet'
 import { getCurrentUserOrThrow } from '@/lib/auth'
 import { getHashtag, isHashtag } from '@/lib/hashtag'
 import type { EnrichedTweet, LoaderType } from '@/lib/types'
+import { extractDateFromUUID } from '@/lib/uuid'
 
 import { Avatar } from '../avatar'
 import { Count } from '../count'
@@ -45,7 +46,7 @@ type Props = EnrichedTweet & {
 export const Tweet = ({
   content,
   id,
-  date,
+  // date,
   currentUser,
   retweetId,
   reactions,
@@ -89,7 +90,9 @@ export const Tweet = ({
             >
               {userName}
             </Link>
-            <span className='text-xs text-ashen'>{date}</span>
+            <span className='text-xs text-ashen'>
+              {extractDateFromUUID(id)}
+            </span>
           </div>
         </div>
         {hashifyContent(content)}
