@@ -172,7 +172,6 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('Reply').ifExists().execute()
   await db.schema.dropTable('Bookmark').ifExists().execute()
   await db.schema.dropTable('TweetLike').ifExists().execute()
-  await db.schema.dropTable('Retweet').ifExists().execute()
   await db.schema.dropTable('TweetAttachment').ifExists().execute()
   await db.schema.dropTable('Tweet').ifExists().execute()
 }

@@ -8,6 +8,8 @@ const users = [
     handle: 'johnsmith23',
     email: 'johnsmith23@gmail.com',
     password: 'P@ssw0rd',
+    image: 'https://i.pravatar.cc/200?img=54',
+    cover: 'https://picsum.photos/id/1/1024/300',
     description:
       'John Smith is a software engineer with over 10 years of experience in developing web applications using various technologies and frameworks. He is passionate about creating scalable and efficient solutions to complex problems.',
   },
@@ -16,6 +18,8 @@ const users = [
     handle: 'janejohnson17',
     email: 'janejohnson17@yahoo.com',
     password: 'Secret123',
+    image: 'https://i.pravatar.cc/200?img=45',
+    cover: 'https://picsum.photos/id/2/1024/300',
     description:
       'Jane Johnson is a talented graphic designer known for her innovative designs and attention to detail. With a background in visual arts and digital media, she brings creativity and style to every project she works on.',
   },
@@ -24,6 +28,8 @@ const users = [
     handle: 'michaelwills',
     email: 'michaelwills@outlook.com',
     password: 'M1chael',
+    image: 'https://i.pravatar.cc/200?img=53',
+    cover: 'https://picsum.photos/id/3/1024/300',
     description:
       'Michael Williams is a marketing specialist with expertise in digital marketing strategies, content creation, and social media management. He has successfully executed campaigns for a diverse range of clients, driving engagement and brand awareness.',
   },
@@ -32,6 +38,8 @@ const users = [
     handle: 'emily_j',
     email: 'emilyjones56@hotmail.com',
     password: 'Ems1234',
+    image: 'https://i.pravatar.cc/200?img=49',
+    cover: 'https://picsum.photos/id/4/1024/300',
     description:
       'Emily Jones is a dedicated teacher with a passion for empowering students through education. She believes in creating inclusive and interactive learning environments where every student can thrive and reach their full potential.',
   },
@@ -40,6 +48,8 @@ const users = [
     handle: 'dbrownie',
     email: 'dbrownie89@gmail.com',
     password: 'Brownie44',
+    image: 'https://i.pravatar.cc/200?img=51',
+    cover: 'https://picsum.photos/id/5/1024/300',
     description:
       'David Brown is a visionary entrepreneur with a track record of building successful startups from the ground up. He is driven by innovation and a desire to disrupt traditional industries with cutting-edge solutions.',
   },
@@ -48,6 +58,8 @@ const users = [
     handle: 'sarahd',
     email: 'sarahdavis32@yahoo.com',
     password: 'Sarah@123',
+    image: 'https://i.pravatar.cc/200?img=44',
+    cover: 'https://picsum.photos/id/6/1024/300',
     description:
       'Sarah Davis is a prolific writer with a knack for storytelling across various genres. With a keen eye for detail and a passion for words, she captivates readers with her engaging narratives and thought-provoking content.',
   },
@@ -56,6 +68,8 @@ const users = [
     handle: 'chrismiller',
     email: 'chrismiller45@outlook.com',
     password: 'MillerC',
+    image: 'https://i.pravatar.cc/200?img=58',
+    cover: 'https://picsum.photos/id/7/1024/300',
     description:
       'Chris Miller is a versatile artist whose work spans across mediums including painting, sculpture, and digital art. With a unique perspective and a dedication to his craft, he creates visually stunning pieces that evoke emotion and inspire.',
   },
@@ -64,6 +78,8 @@ const users = [
     handle: 'jwilson',
     email: 'jwilson78@hotmail.com',
     password: 'J3ss1ca',
+    image: 'https://i.pravatar.cc/200?img=41',
+    cover: 'https://picsum.photos/id/8/1024/300',
     description:
       'Jessica Wilson is a talented musician with a soulful voice and a passion for performance. She connects with audiences through her heartfelt lyrics and dynamic stage presence, leaving a lasting impression wherever she goes.',
   },
@@ -72,6 +88,8 @@ const users = [
     handle: 'mmoore',
     email: 'mmoore56@aol.com',
     password: 'MattyM',
+    image: 'https://i.pravatar.cc/200?img=60',
+    cover: 'https://picsum.photos/id/9/1024/300',
     description:
       'Matthew Moore is a skilled chef with expertise in culinary arts and gastronomy. With a focus on quality ingredients and innovative techniques, he creates memorable dining experiences that delight the senses and satisfy the palate.',
   },
@@ -80,6 +98,8 @@ const users = [
     handle: 'ataylor',
     email: 'ataylor99@gmail.com',
     password: 'TaylorA',
+    image: 'https://i.pravatar.cc/200?img=32',
+    cover: 'https://picsum.photos/id/10/1024/300',
     description:
       "Amanda Taylor is a dedicated athlete with a passion for fitness and wellness. Whether she's in the gym or on the field, she pushes herself to new heights and inspires others to pursue their own health and fitness goals.",
   },
@@ -88,6 +108,8 @@ const users = [
     handle: 'justinlee',
     email: 'justinlee123@outlook.com',
     password: 'LeeJustin',
+    image: 'https://i.pravatar.cc/200?img=65',
+    cover: 'https://picsum.photos/id/11/1024/300',
     description:
       'Justin Lee is a compassionate doctor committed to providing quality healthcare to his patients. With expertise in internal medicine and a focus on preventative care, he empowers patients to take control of their health and well-being.',
   },
@@ -96,6 +118,8 @@ const users = [
     handle: 'hannahwhite',
     email: 'hannah.white@gmail.com',
     password: 'WhiteHannah',
+    image: 'https://i.pravatar.cc/200?img=28',
+    cover: 'https://picsum.photos/id/12/1024/300',
     description:
       'Hannah White is a dedicated lawyer known for her expertise in corporate law and contract negotiations. With a sharp legal mind and a strategic approach, she navigates complex legal issues with confidence and integrity.',
   },
@@ -104,6 +128,8 @@ const users = [
     handle: 'andrewt',
     email: 'andrew.thompson@yahoo.com',
     password: 'ThompsonA',
+    image: 'https://i.pravatar.cc/200?img=64',
+    cover: 'https://picsum.photos/id/13/1024/300',
     description:
       'Andrew Thompson is a visionary architect with a passion for sustainable design and urban planning. With a focus on creating spaces that enhance the quality of life for communities, he integrates innovation and functionality into his projects.',
   },
@@ -112,6 +138,8 @@ const users = [
     handle: 'laureng',
     email: 'laurengarcia@aol.com',
     password: 'GarciaLauren',
+    image: 'https://i.pravatar.cc/200?img=27',
+    cover: 'https://picsum.photos/id/14/1024/300',
     description:
       'Lauren Garcia is an investigative journalist known for her commitment to uncovering the truth and holding those in power accountable. With a relentless pursuit of justice, she fearlessly reports on issues that matter most to society.',
   },
@@ -120,6 +148,8 @@ const users = [
     handle: 'kevinm',
     email: 'kevin.martinez@hotmail.com',
     password: 'MartinezK',
+    image: 'https://i.pravatar.cc/200?img=57',
+    cover: 'https://picsum.photos/id/15/1024/300',
     description:
       "Kevin Martinez is a passionate photographer with a keen eye for capturing moments of beauty and emotion. Whether he's shooting landscapes or portraits, he brings creativity and technical expertise to every photo he takes.",
   },
@@ -128,6 +158,8 @@ const users = [
     handle: 'oliviar',
     email: 'oliviarobinson@gmail.com',
     password: 'RobinsonO',
+    image: 'https://i.pravatar.cc/200?img=25',
+    cover: 'https://picsum.photos/id/16/1024/300',
     description:
       'Olivia Robinson is a seasoned banker with a wealth of experience in financial management and investment strategies. With a focus on building long-term relationships and delivering personalized service, she helps clients achieve their financial goals.',
   },
@@ -136,6 +168,8 @@ const users = [
     handle: 'danielc',
     email: 'danielclark@gmail.com',
     password: 'ClarkD123',
+    image: 'https://i.pravatar.cc/200?img=55',
+    cover: 'https://picsum.photos/id/17/1024/300',
     description:
       'Daniel Clark is a results-driven consultant known for his strategic insights and problem-solving skills. With a knack for identifying opportunities for growth and improvement, he partners with clients to drive organizational success.',
   },
@@ -144,6 +178,8 @@ const users = [
     handle: 'sophiah',
     email: 'sophia.hall@yahoo.com',
     password: 'HallSophia',
+    image: 'https://i.pravatar.cc/200?img=38',
+    cover: 'https://picsum.photos/id/18/1024/300',
     description:
       'Sophia Hall is a talented fashion designer with a flair for creating chic and sophisticated clothing. With a focus on timeless elegance and modern trends, she designs garments that empower individuals to express their unique style.',
   },
@@ -152,6 +188,8 @@ const users = [
     handle: 'nathanw',
     email: 'nathan.wright@gmail.com',
     password: 'WrightN',
+    image: 'https://i.pravatar.cc/200?img=50',
+    cover: 'https://picsum.photos/id/19/1024/300',
     description:
       'Nathan Wright is a skilled engineer with expertise in mechanical and electrical systems. With a passion for innovation and problem-solving, he designs and implements solutions that improve efficiency and performance.',
   },
@@ -160,6 +198,8 @@ const users = [
     handle: 'isabellal',
     email: 'isabella.lewis@hotmail.com',
     password: 'LewisI123',
+    image: 'https://i.pravatar.cc/200?img=23',
+    cover: 'https://picsum.photos/id/20/1024/300',
     description:
       'Isabella Lewis is a talented artist known for her vibrant paintings and mixed-media creations. With a unique style and a passion for experimentation, she pushes the boundaries of traditional art forms and inspires others to embrace their creativity.',
   },
