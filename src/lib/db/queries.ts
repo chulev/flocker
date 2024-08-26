@@ -83,9 +83,9 @@ export const tweetsQuery = (
         .as('userName'),
       eb
         .case()
-        .when(eb.ref('OriginalUser.image'), 'is', null)
-        .then(eb.ref('User.image'))
-        .else(eb.ref('OriginalUser.image'))
+        .when(eb.ref('OriginalUser.handle'), 'is not', null)
+        .then(eb.ref('OriginalUser.image'))
+        .else(eb.ref('User.image'))
         .end()
         .as('userImage'),
       eb
