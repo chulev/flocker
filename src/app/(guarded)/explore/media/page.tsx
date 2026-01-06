@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types'
+import type { Metadata } from 'next/types'
 
 import { TweetList } from '@/components/tweet/list'
 import { fetchMediaTweets } from '@/data/tweet'

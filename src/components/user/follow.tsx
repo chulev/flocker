@@ -1,9 +1,8 @@
 'use client'
 
-import { useCallback } from 'react'
-
 import CheckmarkIcon from 'public/checkmark.svg'
 import FollowIcon from 'public/follow.svg'
+import { useCallback } from 'react'
 
 import { follow } from '@/actions/follow'
 import { Button } from '@/components/button'

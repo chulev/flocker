@@ -1,10 +1,9 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { useCallback, useState } from 'react'
-
 import DarkIcon from 'public/dark.svg'
 import LightIcon from 'public/light.svg'
+import { useCallback, useState } from 'react'
 
 import { changeTheme } from '@/actions/theme'
 import type { Theme } from '@/lib/types'

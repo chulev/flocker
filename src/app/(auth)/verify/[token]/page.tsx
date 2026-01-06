@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types'
+import type { Metadata } from 'next/types'
 
 import { verifyEmail } from '@/actions/verify-email'
 import { FormError } from '@/components/form-error'

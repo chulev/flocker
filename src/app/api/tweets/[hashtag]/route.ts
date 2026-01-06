@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 import { fetchTweetsByHashtag } from '@/data/tweet'
 import { getCurrentUser } from '@/lib/auth'

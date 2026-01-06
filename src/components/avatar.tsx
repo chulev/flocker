@@ -1,5 +1,5 @@
 import { cx } from 'class-variance-authority'
-import { ImageProps } from 'next/image'
+import type { ImageProps } from 'next/image'
 
 import { Image } from './image'
 

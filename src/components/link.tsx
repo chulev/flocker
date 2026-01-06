@@ -1,4 +1,4 @@
-import { type VariantProps, cva, cx } from 'class-variance-authority'
+import { cva, cx, type VariantProps } from 'class-variance-authority'
 import BaseLink, { type LinkProps as BaseLinkProps } from 'next/link'
 
 const variants = cva('cursor-pointer', {

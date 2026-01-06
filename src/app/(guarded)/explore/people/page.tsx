@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types'
+import type { Metadata } from 'next/types'
 
 import { UserList } from '@/components/user/list'
 import { fetchPeople } from '@/data/user'

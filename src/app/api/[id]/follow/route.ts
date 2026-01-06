@@ -1,10 +1,10 @@
-import { NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 import { doesCurrentUserFollow } from '@/data/user'
 import { getCurrentUser } from '@/lib/auth'
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   props: { params: Promise<{ id: string }> }
 ) {
   const params = await props.params

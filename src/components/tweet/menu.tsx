@@ -1,15 +1,14 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { useRef, useState } from 'react'
-import { z } from 'zod'
-
 import ErrorIcon from 'public/error.svg'
 import LikeIcon from 'public/like.svg'
 import ReplyIcon from 'public/reply.svg'
 import RetweetIcon from 'public/retweet.svg'
 import SaveIcon from 'public/save.svg'
 import SendIcon from 'public/send.svg'
+import { useRef, useState } from 'react'
+import type { z } from 'zod'
 
 import { like } from '@/actions/tweet/like-tweet'
 import { reply } from '@/actions/tweet/reply'
@@ -18,7 +17,7 @@ import { save } from '@/actions/tweet/save'
 import { useEvent } from '@/hooks/use-event'
 import { useForm } from '@/hooks/use-form'
 import { useOptimisticAction } from '@/hooks/use-optimistic-action'
-import { getCurrentUserOrThrow } from '@/lib/auth'
+import type { getCurrentUserOrThrow } from '@/lib/auth'
 import { MAX_CONTENT_LENGTH, REPLY_SCHEMA } from '@/lib/validations'
 
 import { Avatar } from '../avatar'

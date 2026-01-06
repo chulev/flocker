@@ -1,8 +1,7 @@
 'use client'
 
-import { forwardRef } from 'react'
-
 import UploadIcon from 'public/upload.svg'
+import { forwardRef } from 'react'
 
 import { useCopyRef } from '@/hooks/use-copy-ref'
 import { ACCEPTED_IMAGE_MIME_TYPES } from '@/lib/validations'
@@ -20,6 +19,7 @@ export const ImgPicker = forwardRef<HTMLInputElement, Props>(
 
     return (
       <>
+        {/* biome-ignore lint: hidden input for upload */}
         <input
           {...rest}
           className='hidden'

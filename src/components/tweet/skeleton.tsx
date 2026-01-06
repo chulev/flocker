@@ -1,5 +1,5 @@
 export const TweetSkeleton = ({ count = 1 }: { count?: number }) =>
-  [...Array(count)].map((_, idx) => (
+  [...Array(count)].map((idx) => (
     <div
       key={idx}
       className='mx-auto flex w-full animate-pulse flex-col rounded-md bg-pure p-4 shadow'

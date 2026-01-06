@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types'
+import type { Metadata } from 'next/types'
 
 import { SignUp } from '../_components/sign-up'
 

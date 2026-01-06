@@ -1,4 +1,4 @@
-import { randomBytes, scryptSync, timingSafeEqual } from 'crypto'
+import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
 const SCRYPT_PARAMS = {
   N: 131072,

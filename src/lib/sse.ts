@@ -1,4 +1,4 @@
-import { EventMap } from './types'
+import type { EventMap } from './types'
 
 export const toSSE = <K extends keyof EventMap>({
   id,

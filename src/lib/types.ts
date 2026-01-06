@@ -1,5 +1,5 @@
-import { fetchReply, fetchTweet } from '@/data/tweet'
-import { fetchUserByHandle } from '@/data/user'
+import type { fetchReply, fetchTweet } from '@/data/tweet'
+import type { fetchUserByHandle } from '@/data/user'
 
 export type Theme = 'light' | 'dark'
 

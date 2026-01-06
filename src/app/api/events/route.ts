@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 import { toSSE } from '@/lib/sse'
 import { getSubscribeClient } from '@/lib/store/client'

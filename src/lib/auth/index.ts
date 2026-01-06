@@ -21,7 +21,7 @@ export const {
   },
   events: {
     async linkAccount({ user }) {
-      const newUser = await db
+      await db
         .updateTable('User')
         .set({
           emailVerified: new Date(),
@@ -59,20 +59,22 @@ export const {
         return token
       }
 
-      const existingUser = await db
-        .selectFrom('User')
-        .select(['name', 'email', 'image', 'handle', 'cover', 'description'])
-        .where('id', '=', user.id!)
-        .executeTakeFirst()
+      if (user) {
+        const existingUser = await db
+          .selectFrom('User')
+          .select(['name', 'email', 'image', 'handle', 'cover', 'description'])
+          .where('id', '=', user.id!)
+          .executeTakeFirst()
 
-      if (!existingUser) return token
+        if (!existingUser) return token
 
-      token.name = existingUser.name
-      token.email = existingUser.email
-      token.handle = existingUser.handle
-      token.image = existingUser.image
-      token.cover = existingUser.cover
-      token.description = existingUser.description
+        token.name = existingUser.name
+        token.email = existingUser.email
+        token.handle = existingUser.handle
+        token.image = existingUser.image
+        token.cover = existingUser.cover
+        token.description = existingUser.description
+      }
 
       return token
     },

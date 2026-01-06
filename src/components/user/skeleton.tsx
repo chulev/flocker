@@ -1,5 +1,5 @@
 export const UserCardSkeleton = ({ count = 2 }: { count?: number }) =>
-  [...Array(count)].map((_, idx) => (
+  [...Array(count)].map((idx) => (
     <div
       key={idx}
       className='mx-auto my-4 flex w-full animate-pulse flex-col rounded-md bg-pure p-4 shadow'

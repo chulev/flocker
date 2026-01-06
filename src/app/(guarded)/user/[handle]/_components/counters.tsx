@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Count } from '@/components/count'
 import { Link } from '@/components/link'
-import { getUserProfileByHandle } from '@/data/user'
+import type { getUserProfileByHandle } from '@/data/user'
 import { useSSE } from '@/hooks/use-sse'
 
 type Props = {

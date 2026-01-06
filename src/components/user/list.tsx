@@ -1,14 +1,13 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { useState } from 'react'
-
 import BinocularsIcon from 'public/binoculars.svg'
+import { useState } from 'react'
 
 import { UserCard } from '@/components/user/card'
 import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import { useSSE } from '@/hooks/use-sse'
-import { getCurrentUserOrThrow } from '@/lib/auth'
+import type { getCurrentUserOrThrow } from '@/lib/auth'
 import type { PaginatedResponse, UserCard as UserCardType } from '@/lib/types'
 
 import { Button } from '../button'

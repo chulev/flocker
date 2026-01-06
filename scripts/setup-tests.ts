@@ -1,30 +1,22 @@
+import { expect } from 'bun:test'
 import * as matchers from '@testing-library/jest-dom/matchers'
 import { plugin } from 'bun'
-import { expect } from 'bun:test'
 
 expect.extend(matchers)
 
 plugin({
-  name: 'SVG',
-  async setup(build) {
-    const { transform } = await import('@svgr/core')
-    const { readFileSync } = await import('fs')
-
-    build.onLoad({ filter: /\.(svg)$/ }, async (args) => {
-      const text = readFileSync(args.path, 'utf8')
-      let contents = await transform(
-        text,
-        {
-          icon: true,
-          exportType: 'default',
-          plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
-        },
-        { componentName: 'ReactComponent' }
-      )
-
+  name: 'svg-component-mock',
+  setup(build) {
+    // Intercept any import ending in .svg
+    build.onLoad({ filter: /\.svg$/ }, () => {
+      // Return a mock React component (TSX)
       return {
-        contents,
-        loader: 'js',
+        contents: `
+          export default function SVGIcon(props) {
+            return <svg {...props} data-testid="svg-icon" />;
+          }
+        `,
+        loader: 'tsx',
       }
     })
   },

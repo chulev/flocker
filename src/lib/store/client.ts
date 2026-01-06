@@ -1,8 +1,8 @@
-import { RedisClientType, createClient } from '@redis/client'
+import { createClient, type RedisClientType } from '@redis/client'
 
 import { toSSE } from '../sse'
 import type { EventMap } from '../types'
-import { MAIN_CHANNEL_KEY } from '../validations'
+import type { MAIN_CHANNEL_KEY } from '../validations'
 
 let subscribeClient: RedisClientType
 let publishClient: RedisClientType

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 import rateLimit from './lib/rate-limit'
 import { SIGN_IN_PATH, SIGN_OUT_PATH } from './routes'

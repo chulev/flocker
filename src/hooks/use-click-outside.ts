@@ -17,7 +17,7 @@ export const useClickOutside = (
     return () => {
       document.removeEventListener('mousedown', handler)
     }
-  }, [ref, onClickOutside])
+  }, [onClickOutside])
 
   return ref
 }

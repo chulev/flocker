@@ -1,12 +1,11 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { useRef } from 'react'
-import { z } from 'zod'
-
 import ErrorIcon from 'public/error.svg'
 import PeopleIcon from 'public/people.svg'
 import PublicIcon from 'public/public.svg'
+import { useRef } from 'react'
+import type { z } from 'zod'
 
 import { post } from '@/actions/tweet/post'
 import { Button } from '@/components/button'

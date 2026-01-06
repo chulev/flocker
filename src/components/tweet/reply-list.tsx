@@ -5,7 +5,7 @@ import RefreshIcon from 'public/refresh.svg'
 
 import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import { useSSE } from '@/hooks/use-sse'
-import { getCurrentUserOrThrow } from '@/lib/auth'
+import type { getCurrentUserOrThrow } from '@/lib/auth'
 import type { PaginatedResponse, Reply as ReplyType } from '@/lib/types'
 import { REPLY_LIMIT } from '@/lib/validations'
 
@@ -103,10 +103,8 @@ export const ReplyList = <T extends ReplyType>({
           {isLoading && !isError && 'Loading...'}
           {isError && !isLoading && (
             <>
-              <>
-                <RefreshIcon />
-                <span className='ml-2'>An error has occured. Retry?</span>
-              </>
+              <RefreshIcon />
+              <span className='ml-2'>An error has occured. Retry?</span>
             </>
           )}
           {!isError && !isLoading && (

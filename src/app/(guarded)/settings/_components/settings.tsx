@@ -2,7 +2,7 @@
 
 import { cx } from 'class-variance-authority'
 import { useRef } from 'react'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 import { update } from '@/actions/settings'
 import { Avatar } from '@/components/avatar'
@@ -13,7 +13,7 @@ import { Image } from '@/components/image'
 import { ImgPicker } from '@/components/img-picker'
 import { Input } from '@/components/input'
 import { useForm } from '@/hooks/use-form'
-import { fetchUser } from '@/lib/auth'
+import type { fetchUser } from '@/lib/auth'
 import {
   MAX_BIO_LENGTH,
   MAX_HANDLE_LENGTH,

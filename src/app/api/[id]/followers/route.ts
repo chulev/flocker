@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 import { getUserFollowers } from '@/data/user'
 import { getCurrentUser } from '@/lib/auth'

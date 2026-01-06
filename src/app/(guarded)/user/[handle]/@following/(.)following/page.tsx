@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types'
+import type { Metadata } from 'next/types'
 
 import { Modal } from '@/components/modal'
 import { UserList } from '@/components/user/list'

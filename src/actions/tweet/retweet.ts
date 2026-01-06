@@ -187,7 +187,7 @@ export const retweet = async (tweetId: string, isRetweeted: boolean) => {
         data: createdRetweet,
       })
     }
-  } catch (err) {
+  } catch (_err) {
     throw Error(`Failed to ${isRetweeted ? 'retweet' : 'delete retweet'}`)
   }
 }

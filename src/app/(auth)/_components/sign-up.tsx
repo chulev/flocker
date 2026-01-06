@@ -1,7 +1,7 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 import { signUp } from '@/actions/sign-up'
 import { Button } from '@/components/button'

@@ -1,4 +1,4 @@
-import { Kysely } from 'kysely'
+import type { Kysely } from 'kysely'
 
 import { filterUnique } from '@/lib/filter-unique'
 import { findHashtags, getHashtag } from '@/lib/hashtag'

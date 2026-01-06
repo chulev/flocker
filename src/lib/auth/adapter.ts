@@ -1,7 +1,7 @@
 import type { Adapter } from '@auth/core/adapters'
-import { Kysely } from 'kysely'
+import type { Kysely } from 'kysely'
 
-import { DB } from '../db/schema'
+import type { DB } from '../db/schema'
 
 export function KyselyAdapter(db: Kysely<DB>): Adapter {
   return {

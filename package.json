@@ -6,7 +6,7 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check",
+    "lint": "biome check --diagnostic-level=error",
     "lint:fix": "biome check --write",
     "db:migrate": "bun run src/scripts/manage-db.ts lib/db/migrations",
     "schema:generate": "kysely-codegen --dialect postgres --out-file src/lib/db/schema.ts",

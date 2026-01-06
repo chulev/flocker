@@ -1,4 +1,4 @@
-import { Kysely } from 'kysely'
+import type { Kysely } from 'kysely'
 
 import { getRandomElement, getRandomNumberInRange } from '../utils'
 

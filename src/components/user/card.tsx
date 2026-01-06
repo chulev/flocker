@@ -1,5 +1,5 @@
 import { Link } from '@/components/link'
-import { getCurrentUserOrThrow } from '@/lib/auth'
+import type { getCurrentUserOrThrow } from '@/lib/auth'
 import type { UserCard as UserCardType } from '@/lib/types'
 
 import { Avatar } from '../avatar'

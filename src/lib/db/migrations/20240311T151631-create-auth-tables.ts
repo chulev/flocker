@@ -1,4 +1,4 @@
-import { Kysely, sql } from 'kysely'
+import { type Kysely, sql } from 'kysely'
 
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema.createType('theme').asEnum(['light', 'dark']).execute()
@@ -10,10 +10,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('name', 'text', (c) => c.notNull())
     .addColumn('email', 'text', (c) => c.unique().notNull())
     .addColumn('handle', 'text', (c) =>
-      c
-        .unique()
-        .notNull()
-        .defaultTo(sql`substr(md5(random()::text), 1, 8)`)
+      c.unique().notNull().defaultTo(sql`substr(md5(random()::text), 1, 8)`)
     )
     .addColumn('password', 'text')
     .addColumn('emailVerified', 'timestamptz')

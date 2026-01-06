@@ -23,7 +23,7 @@ export const extractDateFromUUID = (uuid: string) => {
   const hours = date.getHours()
   const minutes = date.getMinutes()
 
-  const paddedMinutes = minutes < 10 ? '0' + minutes : minutes
+  const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes
 
   return `${day} ${month} at ${hours}:${paddedMinutes}`
 }

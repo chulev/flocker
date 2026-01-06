@@ -1,7 +1,6 @@
-import { type VariantProps, cva, cx } from 'class-variance-authority'
-import { forwardRef } from 'react'
-
+import { cva, cx, type VariantProps } from 'class-variance-authority'
 import LoadingIcon from 'public/loading.svg'
+import { forwardRef } from 'react'
 
 const variants = cva('flex items-center p-2 w-fit', {
   variants: {

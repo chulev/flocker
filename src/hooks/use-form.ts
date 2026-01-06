@@ -1,5 +1,5 @@
 import { useState, useTransition } from 'react'
-import { type SafeParseError, type ZodType } from 'zod'
+import type { SafeParseError, ZodType } from 'zod'
 
 import { valuesToFormData } from '@/lib/serialize'
 
@@ -18,12 +18,15 @@ type FormState<T> = {
 }
 
 const getErrorMessages = <T>(result: SafeParseError<T>): Errors<T> => {
-  return result.error.issues.reduce((errors, { path, message }) => {
-    const errorPath = path[0] as keyof T
-    errors[errorPath] = message
+  return result.error.issues.reduce(
+    (errors, { path, message }) => {
+      const errorPath = path[0] as keyof T
+      errors[errorPath] = message
 
-    return errors
-  }, {} as Errors<T>)
+      return errors
+    },
+    {} as Errors<T>
+  )
 }
 
 const extractErrors = <T>(values: T, validationSchema: ZodType<T>) => {

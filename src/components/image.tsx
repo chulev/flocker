@@ -1,6 +1,6 @@
 'use client'
 
-import BaseImage, { ImageProps } from 'next/image'
+import BaseImage, { type ImageProps } from 'next/image'
 
 const toBase64 = (str: string) => Buffer.from(str).toString('base64')
 
@@ -32,7 +32,7 @@ const cloudinaryLoader = ({
   width: number
   quality?: number
 }) => {
-  const params = ['f_auto', 'c_limit', 'w_' + width, 'q_' + (quality || 'auto')]
+  const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${params.join(',')}/v${src}`
 }
 

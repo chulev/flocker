@@ -1,7 +1,7 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 import { emailResetLink } from '@/actions/email-reset-link'
 import { Button } from '@/components/button'

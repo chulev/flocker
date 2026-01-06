@@ -1,18 +1,16 @@
 'use client'
 
-import { useState } from 'react'
-
 import BinocularsIcon from 'public/binoculars.svg'
+import { useState } from 'react'
 
 import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import { useSSE } from '@/hooks/use-sse'
-import { getCurrentUserOrThrow } from '@/lib/auth'
+import type { getCurrentUserOrThrow } from '@/lib/auth'
 import { findHashtags, generateHashtagRoutes } from '@/lib/hashtag'
 import type { EnrichedTweet, PaginatedResponse } from '@/lib/types'
-
-import { Tweet } from '.'
 import { Button } from '../button'
 import { LoadNew } from '../load-new'
+import { Tweet } from '.'
 import { TweetSkeleton } from './skeleton'
 
 type Props<T> = {
@@ -290,7 +288,7 @@ export const TweetList = <T extends EnrichedTweet>({
           plural='new tweets'
         />
       )}
-      {tweets.map((tweet, idx) => (
+      {tweets.map((tweet, _idx) => (
         <Tweet key={tweet.id} currentUser={currentUser} {...tweet} />
       ))}
       {hasMore && !manual && <div ref={sentryRef} />}

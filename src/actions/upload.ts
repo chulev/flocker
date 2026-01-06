@@ -1,6 +1,6 @@
 'use server'
 
-import { createHash } from 'crypto'
+import { createHash } from 'node:crypto'
 
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME as string
 const SECRET = process.env.CLOUDINARY_SECRET as string
@@ -8,7 +8,7 @@ const API_KEY = process.env.CLOUDINARY_API_KEY as string
 const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
 
 const sign = (file: File) => {
-  const timestamp = String(+new Date())
+  const timestamp = String(Date.now())
   const signature = createHash('sha256')
     .update(`timestamp=${timestamp}${SECRET}`)
     .digest('hex')

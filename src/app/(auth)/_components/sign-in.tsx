@@ -1,12 +1,11 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { signIn as authSignIn } from 'next-auth/react'
 import { isRedirectError } from 'next/dist/client/components/redirect-error'
 import { useSearchParams } from 'next/navigation'
-import { z } from 'zod'
-
+import { signIn as authSignIn } from 'next-auth/react'
 import GoogleIcon from 'public/google.svg'
+import type { z } from 'zod'
 
 import { signIn } from '@/actions/sign-in'
 import { Button } from '@/components/button'

@@ -2,7 +2,7 @@ import { getCurrentUserOrThrow } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { peopleQuery } from '@/lib/db/queries'
 import { paginate } from '@/lib/paginate'
-import { CursorType, Order, ResultType } from '@/lib/types'
+import type { CursorType, Order, ResultType } from '@/lib/types'
 import { DEFAULT_LIMIT, WHO_TO_FOLLOW_LIMIT } from '@/lib/validations'
 
 export const getUserProfileByHandle = async (handle: string) => {

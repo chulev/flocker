@@ -20,7 +20,7 @@ export const generateVerificationToken = async (email: string) => {
     .insertInto('VerificationToken')
     .values({
       email,
-      expires: new Date(new Date().getTime() + THREE_HOURS),
+      expires: new Date(Date.now() + THREE_HOURS),
     })
     .returning(['id', 'email'])
     .executeTakeFirstOrThrow()
@@ -44,7 +44,7 @@ export const generatePasswordResetToken = async (email: string) => {
     .insertInto('ResetPasswordToken')
     .values({
       email,
-      expires: new Date(new Date().getTime() + THREE_HOURS),
+      expires: new Date(Date.now() + THREE_HOURS),
     })
     .returning(['id', 'email'])
     .executeTakeFirstOrThrow()

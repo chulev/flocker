@@ -5,8 +5,8 @@ import { cx } from 'class-variance-authority'
 import ErrorIcon from 'public/error.svg'
 import RefreshIcon from 'public/refresh.svg'
 
-import { fetchTweetReplies } from '@/data/tweet'
-import { getCurrentUserOrThrow } from '@/lib/auth'
+import type { fetchTweetReplies } from '@/data/tweet'
+import type { getCurrentUserOrThrow } from '@/lib/auth'
 import { getHashtag, isHashtag } from '@/lib/hashtag'
 import type { EnrichedTweet, LoaderType } from '@/lib/types'
 import { extractDateFromUUID } from '@/lib/uuid'
@@ -25,7 +25,7 @@ const hashifyContent = (content: string) => {
       return (
         <Link
           variant='highlight'
-          key={index}
+          key={word}
           href={`/hashtag/${getHashtag(word)}`}
         >
           {`${word} `}

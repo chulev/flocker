@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types'
+import type { Metadata } from 'next/types'
 
 import { FormError } from '@/components/form-error'
 import { fetchResetPasswordToken } from '@/data/token'

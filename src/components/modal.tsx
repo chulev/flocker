@@ -1,9 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect } from 'react'
-
 import CloseIcon from 'public/close.svg'
+import { useCallback, useEffect } from 'react'
 
 import { useClickOutside } from '@/hooks/use-click-outside'
 

@@ -22,7 +22,7 @@ export const update = async (data: FormData) => {
       ? await upload(parsedValues.cover)
       : parsedValues.cover
 
-  const updatedUser = await db
+  const _updatedUser = await db
     .updateTable('User')
     .set({
       name: parsedValues.name,

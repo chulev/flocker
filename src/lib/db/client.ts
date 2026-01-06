@@ -2,7 +2,7 @@ import { Kysely, PostgresDialect } from 'kysely'
 import { NeonDialect } from 'kysely-neon'
 import { Pool } from 'pg'
 
-import { DB } from './schema'
+import type { DB } from './schema'
 
 const dialect =
   process.env.NODE_ENV === 'production'
