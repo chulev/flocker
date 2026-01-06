@@ -16,6 +16,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  trustHost: true,
   pages: {
     signIn: SIGN_IN_PATH,
   },
