@@ -26,7 +26,7 @@ export const {
         .set({
           emailVerified: new Date(),
         })
-        .where('id', '=', user.id)
+        .where('id', '=', user.id!)
         .returning('handle')
         .executeTakeFirst()
     },
@@ -62,7 +62,7 @@ export const {
       const existingUser = await db
         .selectFrom('User')
         .select(['name', 'email', 'image', 'handle', 'cover', 'description'])
-        .where('id', '=', user?.id)
+        .where('id', '=', user.id!)
         .executeTakeFirst()
 
       if (!existingUser) return token

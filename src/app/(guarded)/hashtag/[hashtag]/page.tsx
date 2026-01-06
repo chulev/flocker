@@ -7,21 +7,27 @@ import { getCurrentUserOrThrow } from '@/lib/auth'
 import type { LoaderType } from '@/lib/types'
 
 type Props = {
-  params: {
+  params: Promise<{
     hashtag: string
-  }
+  }>
 }
 
-export async function generateMetadata({
-  params: { hashtag },
-}: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
+
+  const { hashtag } = params
+
   return {
     title: `Tweets for #${hashtag} | Flocker`,
     description: 'Be social',
   }
 }
 
-export default async function HashtagPage({ params: { hashtag } }: Props) {
+export default async function HashtagPage(props: Props) {
+  const params = await props.params
+
+  const { hashtag } = params
+
   const currentUser = await getCurrentUserOrThrow()
   const decodedHashtag = decodeURI(hashtag)
   const initialTweets = await fetchTweetsByHashtag(decodedHashtag)

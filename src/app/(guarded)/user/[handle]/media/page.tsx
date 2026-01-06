@@ -6,21 +6,27 @@ import { getCurrentUserOrThrow } from '@/lib/auth'
 import type { LoaderType } from '@/lib/types'
 
 type Props = {
-  params: {
+  params: Promise<{
     handle: string
-  }
+  }>
 }
 
-export async function generateMetadata({
-  params: { handle },
-}: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
+
+  const { handle } = params
+
   return {
     title: `${handle} Media | Flocker`,
     description: 'Be social',
   }
 }
 
-export default async function UserMediaPage({ params: { handle } }: Props) {
+export default async function UserMediaPage(props: Props) {
+  const params = await props.params
+
+  const { handle } = params
+
   const currentUser = await getCurrentUserOrThrow()
   const initialTweets = await fetchUserMediaTweets(handle)
 

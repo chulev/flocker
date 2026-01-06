@@ -6,9 +6,9 @@ import { Link } from '@/components/link'
 import { SIGN_IN_PATH } from '@/routes'
 
 type Props = {
-  params: {
+  params: Promise<{
     token: string
-  }
+  }>
 }
 
 export const metadata: Metadata = {
@@ -16,7 +16,11 @@ export const metadata: Metadata = {
   description: 'Be social',
 }
 
-export default async function VerifyPage({ params: { token } }: Props) {
+export default async function VerifyPage(props: Props) {
+  const params = await props.params
+
+  const { token } = params
+
   try {
     await verifyEmail(token)
   } catch (_) {

@@ -4,12 +4,16 @@ import { getCurrentUserOrThrow } from '@/lib/auth'
 import type { LoaderType } from '@/lib/types'
 
 type Props = {
-  params: {
+  params: Promise<{
     handle: string
-  }
+  }>
 }
 
-export default async function UserTweetsPage({ params: { handle } }: Props) {
+export default async function UserTweetsPage(props: Props) {
+  const params = await props.params
+
+  const { handle } = params
+
   const currentUser = await getCurrentUserOrThrow()
   const initialTweets = await fetchUserTweets(handle)
 

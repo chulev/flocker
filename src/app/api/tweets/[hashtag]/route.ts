@@ -10,8 +10,12 @@ import {
 
 export async function GET(
   request: NextRequest,
-  { params: { hashtag } }: { params: { hashtag: string } }
+  props: { params: Promise<{ hashtag: string }> }
 ) {
+  const params = await props.params
+
+  const { hashtag } = params
+
   const currentUser = await getCurrentUser()
 
   if (!currentUser) return Response.json('Not authorized', { status: 401 })

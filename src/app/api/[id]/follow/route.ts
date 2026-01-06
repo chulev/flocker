@@ -5,8 +5,12 @@ import { getCurrentUser } from '@/lib/auth'
 
 export async function GET(
   request: NextRequest,
-  { params: { id } }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params
+
+  const { id } = params
+
   const currentUser = await getCurrentUser()
 
   if (!currentUser) return Response.json('Not authorized', { status: 401 })

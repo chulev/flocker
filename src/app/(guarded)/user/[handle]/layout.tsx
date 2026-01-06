@@ -15,17 +15,18 @@ const ACTIVE_CLASS_NAME = 'text-sky border-l-4 border-l-sky pb-3 pl-2'
 
 type Props = {
   children: React.ReactNode
-  params: { handle: string }
+  params: Promise<{ handle: string }>
   following: React.ReactNode
   followers: React.ReactNode
 }
 
-export default async function UserLayout({
-  children,
-  params: { handle },
-  following,
-  followers,
-}: Props) {
+export default async function UserLayout(props: Props) {
+  const params = await props.params
+
+  const { handle } = params
+
+  const { children, following, followers } = props
+
   const currentUser = await getCurrentUser()
   const user = await getUserProfileByHandle(handle)
 

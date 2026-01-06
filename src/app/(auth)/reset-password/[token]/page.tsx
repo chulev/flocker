@@ -6,9 +6,9 @@ import { fetchResetPasswordToken } from '@/data/token'
 import { ResetPassword } from './_components/reset-password'
 
 type Props = {
-  params: {
+  params: Promise<{
     token: string
-  }
+  }>
 }
 
 export const metadata: Metadata = {
@@ -16,7 +16,11 @@ export const metadata: Metadata = {
   description: 'Be social',
 }
 
-export default async function ResetPasswordPage({ params: { token } }: Props) {
+export default async function ResetPasswordPage(props: Props) {
+  const params = await props.params
+
+  const { token } = params
+
   const resetToken = await fetchResetPasswordToken(token)
 
   if (!resetToken) {

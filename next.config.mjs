@@ -42,18 +42,18 @@ const nextConfig = {
       },
     ],
   },
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
   reactStrictMode: true,
   experimental: {
     staleTimes: {
       dynamic: 0,
-    },
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
     },
   },
 }
